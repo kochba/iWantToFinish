@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "486790333222",
+    "project_id": "tkfinalproject",
+    "storage_bucket": "tkfinalproject.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:486790333222:android:7a464aad1a22d2b2e677e7",
+        "android_client_info": {
+          "package_name": "com.example.tkfinalproject"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDalhvyJ7Ex_qdGWtbKdtlWiXwi5EGeyXM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

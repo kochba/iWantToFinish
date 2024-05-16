@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="375dp"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="#aaa"
+    tools:context=".UI.Fragments.firstFragment"
+    android:layout_gravity="center"
+    android:layoutDirection="ltr"
+    >
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="הדגם שלך"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/myfont"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_marginTop="5dp"
+
+        />
+    <EditText
+        android:id="@+id/model"
+        android:layout_width="325dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/edittext"
+        android:textSize="20sp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:fontFamily="@font/myfont"
+        android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890"
+        android:focusable="false"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="מצב הטלפון לאחר בדיקה"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/myfont"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_marginTop="35dp"
+        />
+    <EditText
+        android:id="@+id/level"
+        android:layout_width="325dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/edittext"
+        android:textSize="20sp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:fontFamily="@font/myfont"
+        android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890"
+        android:focusable="false"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="בחר את דרך הזיכוי"
+        android:textSize="35sp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/myfont"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_marginTop="75dp"
+        android:layout_marginBottom="15dp"
+        />
+
+</LinearLayout>

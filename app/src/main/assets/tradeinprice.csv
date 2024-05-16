@@ -1,0 +1,103 @@
+brand,model,capacity,price1,price2,price3,price4
+apple,iphone 6,16GB,100,50,25,20
+apple,iphone 6,32GB,100,50,25,20
+apple,iphone 6,64GB,100,50,25,20
+apple,iphone 6,128GB,100,50,25,20
+apple,iphone 6 plus,16GB,100,50,25,20
+apple,iphone 6 plus,32GB,100,50,25,20
+apple,iphone 6 plus,64GB,100,50,25,20
+apple,iphone 6 plus,128GB,100,50,25,20
+apple,iphone 6s,16GB,100,50,25,20
+apple,iphone 6s,32GB,100,50,25,20
+apple,iphone 6s,64GB,100,50,25,20
+apple,iphone 6s,128GB,100,50,25,20
+apple,iphone 6s plus,16GB,100,50,25,20
+apple,iphone 6s plus,32GB,100,50,25,20
+apple,iphone 6s plus,64GB,100,50,25,20
+apple,iphone 6s plus,128GB,100,50,25,20
+apple,iphone 7,32GB,100,50,25,20
+apple,iphone 7,64GB,100,50,25,20
+apple,iphone 7,128GB,100,50,25,20
+apple,iphone 7 plus,32GB,100,50,25,20
+apple,iphone 7 plus,64GB,100,50,25,20
+apple,iphone 7 plus,128GB,100,50,25,20
+apple,iphone 8,64GB,150,100,50,20
+apple,iphone 8,256GB,150,100,50,20
+apple,iphone 8 plus,64GB,200,150,75,50
+apple,iphone 8 plus,256GB,200,150,75,50
+apple,iphone x,64GB,400,300,150,50
+apple,iphone x,256GB,450,350,175,50
+apple,iphone xs,64GB,450,350,175,50
+apple,iphone xs,256GB,500,400,200,50
+apple,iphone xs,512GB,500,400,200,50
+apple,iphone xs max,64GB,650,550,275,70
+apple,iphone xs max,256GB,700,600,300,80
+apple,iphone xs max,512GB,700,600,300,80
+apple,iphone xr,64GB,400,300,150,50
+apple,iphone xr,128GB,450,350,175,50
+apple,iphone xr,256GB,450,350,175,50
+apple,iphone se,64GB,300,200,100,50
+apple,iphone se,128GB,300,200,100,50
+apple,iphone 11,64GB,700,600,300,50
+apple,iphone 11,128GB,750,650,325,150
+apple,iphone 11,256GB,750,650,325,150
+apple,iphone 11 pro,64GB,800,700,350,150
+apple,iphone 11 pro,256GB,850,750,375,180
+apple,iphone 11 pro,512GB,900,800,400,180
+apple,iphone 11 pro max,64GB,100,900,450,200
+apple,iphone 11 pro max,256GB,1050,1000,500,200
+apple,iphone 11 pro max,512GB,1250,1100,550,200
+apple,iphone 12 mini,64GB,750,600,300,200
+apple,iphone 12 mini,128GB,800,650,325,150
+apple,iphone 12 mini,256GB,850,700,350,150
+apple,iphone 12,64GB,900,800,400,300
+apple,iphone 12,128GB,950,850,425,300
+apple,iphone 12,256GB,1000,900,450,300
+apple,iphone 12 pro,128GB,1300,1200,600,400
+apple,iphone 12 pro,256GB,1350,1250,625,400
+apple,iphone 12 pro,512GB,1400,1300,650,400
+apple,iphone 12 pro max,128GB,1550,1400,700,450
+apple,iphone 12 pro max,256GB,1650,1500,750,450
+apple,iphone 12 pro max,512GB,1750,1600,800,450
+apple,iPhone 13 mini ,128GB,900,750,375,150
+apple,iPhone 13 mini,256GB,900,800,400,150
+apple,iphone 13,128GB,1500,1300,650,600
+apple,iphone 13,256GB,1550,1350,675,600
+apple,iphone 13 pro,128GB,1700,1400,700,600
+apple,iphone 13 pro,256GB,1800,1450,725,600
+apple,iphone 13 pro,512GB,1850,1500,750,600
+apple,iphone 13 pro,1TB,1900,1550,775,600
+apple,iphone 13 pro max,128GB,2100,1900,950,600
+apple,iphone 13 pro max,256GB,2200,2000,1000,600
+apple,iphone 13 pro max,512GB,2300,2100,1050,600
+apple,iphone 13 pro max,1TB,2400,2200,1100,600
+apple,iPhone 14,128GB,1750,1500,750,600
+apple,iPhone 14 ,256GB,1850,1600,800,600
+apple,iPhone 14,512GB,1950,1700,850,600
+apple,iPhone 14 Plus,128GB,1850,1600,800,600
+apple,iPhone 14 Plus,256GB,1950,1700,850,600
+apple,iPhone 14 Plus,512GB,2050,1800,900,600
+apple,iPhone 14 Pro,128GB,2200,1900,950,650
+apple,iPhone 14 Pro,256GB,2300,2000,1000,650
+apple,iPhone 14 Pro,512GB,2400,2100,1050,650
+apple,iPhone 14 Pro,1TB,2500,2200,1100,650
+apple,iPhone 14 Pro Max,128GB,2600,2300,1150,650
+apple,iPhone 14 Pro Max,256GB,2700,2400,1200,650
+apple,iPhone 14 Pro Max,512GB,2800,2500,1250,650
+apple,iPhone 14 Pro Max ,1TB,2900,2600,1300,650
+apple,iphone 15 ,128GB,2500,2200,1100,700
+apple,iphone 15 ,256GB,2900,2600,1300,700
+apple,iphone 15 pro ,128GB,3600,3300,1650,700
+apple,iphone 15 pro ,256GB,3900,3600,1800,700
+apple,iphone 15 pro ,512GB,4100,3800,1900,700
+apple,iphone 15 pro max ,128GB,4200,3800,1900,700
+apple,iphone 15 pro max ,256GB,4500,4100,2050,700
+apple,iphone 15 pro max ,512GB,4700,4300,2150,700
+apple,iphone 15 pro max ,1TB,5200,4800,2400,700
+samsung,S23,128GB,1050,950,475,325
+samsung,S23,256GB,1050,950,475,325
+samsung,S23 Plus,256GB,1500,1300,650,500
+samsung,S23 Plus,512GB,1500,1300,650,500
+samsung,S23 Ultra,256GB,2000,1800,900,725
+samsung,S23 Ultra,512GB,2000,1800,900,725
+samsung,S23 Ultra,1TB,2000,1800,900,725

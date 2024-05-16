@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".UI.mainactivity.MainActivity"
+    android:orientation="vertical"
+    android:layoutDirection="ltr"
+    android:background="#aaa">
+
+    <ImageView
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:src="@drawable/newlogo"
+        android:layout_marginTop="55dp"
+        android:layout_gravity="center"
+        />
+
+    <Button
+        android:id="@+id/login"
+        android:layout_width="220dp"
+        android:layout_height="75dp"
+        android:background="@drawable/button"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_marginTop="170dp"
+        android:text="התחבר"
+        android:textSize="35sp"
+        android:fontFamily="@font/myfont"
+        android:enabled="false"
+        />
+
+    <Button
+        android:id="@+id/signup"
+        android:layout_width="220dp"
+        android:layout_height="75dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/button"
+        android:text="הירשם"
+        android:textSize="35sp"
+        android:fontFamily="@font/myfont"
+        android:enabled="false"
+        />
+
+
+
+</LinearLayout>

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".UI.RefundActivity.Refund"
+    android:background="#aaa"
+    android:layoutDirection="ltr"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+        <ImageView
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:src="@drawable/newlogo"
+            android:layout_gravity="center"
+            android:layout_marginTop="35dp"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="שווי זיכוי לאחר בדיקה"
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/myfont"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_marginTop="5dp"
+
+            />
+        <EditText
+            android:id="@+id/finalprice"
+            android:layout_width="325dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edittext"
+            android:textSize="32sp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:fontFamily="@font/myfont"
+            android:maxLines="1"
+            android:maxLength="15"
+            android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890"
+            android:focusable="false"
+            />
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="25dp"
+            android:background="@drawable/containrfragment"
+            >
+            <androidx.fragment.app.FragmentContainerView
+                android:layoutDirection="rtl"
+                android:paddingLeft="30dp"
+                android:paddingRight="30dp"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp"
+                android:id="@+id/fragmentContainerView"
+                android:layout_gravity="center"
+                android:layout_width="375dp"
+                android:layout_height="wrap_content"
+                />
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="30dp"
+            >
+            <Button
+                android:id="@+id/creditbutton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_margin="5dp"
+                android:fontFamily="@font/myfont"
+                android:textSize="25dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:background="@drawable/button"
+                android:text="אשראי" />
+
+            <Button
+                android:id="@+id/button2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_margin="5dp"
+                android:background="@drawable/button"
+                android:fontFamily="@font/myfont"
+                android:textSize="25dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="ביטול" />
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_margin="5dp"
+                android:background="@drawable/button"
+                android:fontFamily="@font/myfont"
+                android:textSize="25dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="מזומן" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</ScrollView>
