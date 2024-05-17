@@ -36,7 +36,6 @@ public class UtilityClass {
     }
 
 //    public void showalert(String head,String body){
-//        .
 //        adb.setTitle(head);
 //        adb.setMessage(body);
 //        adb.setCancelable(false);

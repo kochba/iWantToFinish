@@ -18,10 +18,11 @@ import com.example.tkfinalproject.R;
 import com.example.tkfinalproject.RePostry.User;
 import com.example.tkfinalproject.UI.FirstPage.FirstPage;
 import com.example.tkfinalproject.UI.Login.login;
+import com.example.tkfinalproject.Utility.BaseActivity;
 import com.example.tkfinalproject.Utility.IonComplete;
 import com.example.tkfinalproject.Utility.LocaleHelper;
 
-public class UpdateUser extends AppCompatActivity implements View.OnClickListener {
+public class UpdateUser extends BaseActivity implements View.OnClickListener {
 
     EditText editTextName,editTextPass;
     Intent intent;
@@ -53,6 +54,10 @@ public class UpdateUser extends AppCompatActivity implements View.OnClickListene
         intent = new Intent(UpdateUser.this, FirstPage.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         sp = getSharedPreferences("MyUserPerfs" , Context.MODE_PRIVATE);
+    }
+    @Override
+    protected int getRootLayoutId() {
+        return R.id.updatelayout;
     }
     public void setClickTrue(){
         Update.setClickable(true);
@@ -94,9 +99,11 @@ public class UpdateUser extends AppCompatActivity implements View.OnClickListene
         SharedPreferences.Editor editor = sp.edit();
         if (editTextName.getText().length() < 8){
             showalert("יש בעיה חבר!","שם משתמש קצר משמונה");
+            Update.setEnabled(true);
         }
         else if (editTextPass.getText().length() < 6){
             showalert("יש בעיה חבר!","סיסמה קצרה מ6");
+            Update.setEnabled(true);
         }
         else if (isConnected){
             user = new User(sp.getString("UserName",""),sp.getString("UserPass",""));
@@ -112,19 +119,23 @@ public class UpdateUser extends AppCompatActivity implements View.OnClickListene
                             }
                             moudle.setUser(editTextName,editTextPass);
                             showalert("עדכון סיסמה הצליח!","אתה יכול להמשיך להשתמש באפלייקצייה",intent);
+                            Update.setEnabled(true);
                             break;
                         case 1:
                             showalert("העדכון נכשל!","נסה שוב");
+                            Update.setEnabled(true);
                             break;
                         case 2:
                             showalert("יש בעיה חבר!","השם משתמש החדש כבר קיים במערכת");
+                            Update.setEnabled(true);
                     }
                 }
             });
         }
         else {
             showalert("יש בעיה חבר!","אין אינטרנט חבר אי אפשר לעדכן סיסמה");
+            Update.setEnabled(true);
         }
-        Update.setEnabled(true);
     }
+
 }

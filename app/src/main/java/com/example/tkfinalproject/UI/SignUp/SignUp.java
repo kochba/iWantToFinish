@@ -25,13 +25,14 @@ import com.example.tkfinalproject.RePostry.MyDataBaseHelper;
 import com.example.tkfinalproject.RePostry.User;
 import com.example.tkfinalproject.UI.FirstPage.FirstPage;
 import com.example.tkfinalproject.UI.Login.login;
+import com.example.tkfinalproject.Utility.BaseActivity;
 import com.example.tkfinalproject.Utility.IonComplete;
 import com.example.tkfinalproject.Utility.LocaleHelper;
 import com.example.tkfinalproject.Utility.UtilityClass;
 
 import java.util.jar.Attributes;
 
-public class SignUp extends AppCompatActivity implements View.OnClickListener {
+public class SignUp extends BaseActivity implements View.OnClickListener {
 
     private EditText name , pass ,eqpass;
     private Button btn;
@@ -113,10 +114,10 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
         });
 
     }
-
-
-
-
+    @Override
+    protected int getRootLayoutId() {
+        return R.id.signuplayout;
+    }
     @Override
     public void onClick(View v) {
         btn.setEnabled(false);
@@ -133,6 +134,7 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
                 }
             });
             adb.create().show();
+            btn.setEnabled(true);
         }
         else if (pass.getText().length() < 6){
             AlertDialog.Builder adb = new AlertDialog.Builder(this);
@@ -146,6 +148,7 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
                 }
             });
             adb.create().show();
+            btn.setEnabled(true);
         }
         else if (!pass.getText().toString().equals(eqpass.getText().toString())) {
             AlertDialog.Builder adb = new AlertDialog.Builder(this);
@@ -159,6 +162,7 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
                 }
             });
             adb.create().show();
+            btn.setEnabled(true);
         }
         else {
             ConnectivityManager cm = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -196,6 +200,7 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
                                     }
                                 });
                                 adb.create().show();
+                                btn.setEnabled(true);
                                 break;
                             case 2:
                                 adb.setTitle("יש בעיה חבר!");
@@ -208,6 +213,7 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
                                     }
                                 });
                                 adb.create().show();
+                                btn.setEnabled(true);
                                 break;
                         }
 
@@ -225,9 +231,8 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
                     }
                 });
                 adb.create().show();
-
+                btn.setEnabled(true);
             }
         }
-        btn.setEnabled(true);
     }
 }

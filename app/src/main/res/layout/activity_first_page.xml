@@ -8,6 +8,7 @@
     android:background="#aaa"
     android:orientation="vertical"
     android:layoutDirection="ltr"
+    android:id="@+id/Firstpagelayout"
     >
     <LinearLayout
         android:layout_width="match_parent"

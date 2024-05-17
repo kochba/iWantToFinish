@@ -11,9 +11,10 @@ import android.widget.ProgressBar;
 
 import com.example.tkfinalproject.R;
 import com.example.tkfinalproject.UI.FirstPage.FirstPage;
+import com.example.tkfinalproject.Utility.BaseActivity;
 import com.example.tkfinalproject.Utility.Phone;
 
-public class progerssFirst extends AppCompatActivity implements View.OnClickListener {
+public class progerssFirst extends BaseActivity implements View.OnClickListener {
     ProgressBar progressBar;
     private static final long TOTAL_TIME_MILLIS = 1000;
     Intent intent;
@@ -48,6 +49,10 @@ public class progerssFirst extends AppCompatActivity implements View.OnClickList
 
         // Start the timer
         countDownTimer.start();
+    }
+    @Override
+    protected int getRootLayoutId() {
+        return R.id.prggresfirstlayout;
     }
     @Override
     protected void onDestroy() {

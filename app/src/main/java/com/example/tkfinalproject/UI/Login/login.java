@@ -21,8 +21,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.tkfinalproject.R;
 import com.example.tkfinalproject.RePostry.User;
 import com.example.tkfinalproject.UI.FirstPage.FirstPage;
+import com.example.tkfinalproject.Utility.BaseActivity;
 
-public class login extends AppCompatActivity implements View.OnClickListener {
+public class login extends BaseActivity implements View.OnClickListener {
 
     private Button btn;
     private CheckBox checkBox;
@@ -71,6 +72,10 @@ public class login extends AppCompatActivity implements View.OnClickListener {
                 return false;
             }
         });
+    }
+    @Override
+    protected int getRootLayoutId() {
+        return R.id.loginlayout;
     }
 
     @Override
