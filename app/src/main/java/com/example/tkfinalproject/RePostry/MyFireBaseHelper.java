@@ -6,7 +6,9 @@ import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.LifecycleOwner;
 
+import com.example.tkfinalproject.Utility.ConnectivityListener;
 import com.example.tkfinalproject.Utility.IonComplete;
 import com.example.tkfinalproject.Utility.UtilityClass;
 import com.google.android.gms.dynamic.IFragmentWrapper;
@@ -36,11 +38,13 @@ public class MyFireBaseHelper {
     DataSnapshot  dataSnapshot;
     UtilityClass utilityClass;
     ExecutorService executorService;
+    ConnectivityListener connectivityListener;
 
     public MyFireBaseHelper(Context context) {
         utilityClass = new UtilityClass(context);
-        executorService = Executors.newSingleThreadExecutor();
         try {
+            executorService = Executors.newSingleThreadExecutor();
+            connectivityListener = new ConnectivityListener(context);
             myFireBaseHelper = new MyFireBaseHelper(context);
             database = FirebaseDatabase.getInstance();
             reference = database.getReference("Users");
@@ -49,7 +53,7 @@ public class MyFireBaseHelper {
             utilityClass.showAlertExp();
         }
     }
-    public void addUser(User user,IonComplete ionComplete){
+    public void addUser(User user, IonComplete ionComplete){
         executorService.execute(() -> {
             try {
                 reference.child(user.getUsername()).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -149,6 +153,7 @@ public class MyFireBaseHelper {
             }
         });
     }
+
 
 
 //    public boolean userNameExist(String userName){
