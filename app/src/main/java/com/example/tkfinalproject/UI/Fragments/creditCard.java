@@ -9,10 +9,13 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 
 import com.braintreepayments.cardform.view.CardForm;
 import com.example.tkfinalproject.R;
+import com.example.tkfinalproject.Utility.InfoMeassge;
+import com.example.tkfinalproject.Utility.SmsSender;
 import com.example.tkfinalproject.Utility.UtilityClass;
 
 /**
@@ -28,6 +31,8 @@ public class creditCard extends Fragment implements View.OnClickListener {
     private static final String ARG_PARAM2 = "param2";
 
     UtilityClass utilityClass;
+    Button btn;
+    CardForm cardForm;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -70,7 +75,9 @@ public class creditCard extends Fragment implements View.OnClickListener {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_credit_card, container, false);
         utilityClass = new UtilityClass(getActivity());
-        CardForm cardForm = view.findViewById(R.id.card_form);
+        btn = view.findViewById(R.id.aprrovecard);
+        btn.setOnClickListener(this);
+        cardForm = view.findViewById(R.id.card_form);
         cardForm.cardRequired(true)
                 .expirationRequired(true)
                 .cvvRequired(true)
@@ -96,6 +103,11 @@ public class creditCard extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-
+        if (cardForm.isValid()){
+           // SmsSender.sendSms("+1234567890",new InfoMeassge());
+        }
+        else {
+            cardForm.validate();
+        }
     }
 }

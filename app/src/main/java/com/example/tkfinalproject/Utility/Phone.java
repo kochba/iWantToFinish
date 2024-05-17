@@ -6,6 +6,7 @@ public class Phone implements Serializable {
     int code;
     String amount;
     String currentPhone;
+    String stauts;
 
     public Phone(int code, String amount, String currentPhone) {
         this.code = code;
@@ -35,5 +36,12 @@ public class Phone implements Serializable {
 
     public void setAmount(String amount) {
         this.amount = amount;
+    }
+    public String getStauts() {
+        return stauts;
+    }
+
+    public void setStauts(String stauts) {
+        this.stauts = stauts;
     }
 }
