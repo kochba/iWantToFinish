@@ -12,8 +12,9 @@ import android.widget.ProgressBar;
 import com.example.tkfinalproject.R;
 import com.example.tkfinalproject.UI.FirstPage.FirstPage;
 import com.example.tkfinalproject.UI.RefundActivity.Refund;
+import com.example.tkfinalproject.Utility.BaseActivity;
 
-public class progressSecond extends AppCompatActivity implements View.OnClickListener {
+public class progressSecond extends BaseActivity implements View.OnClickListener {
 
     ProgressBar progressBar;
     private static final long TOTAL_TIME_MILLIS = 1000;
@@ -52,6 +53,10 @@ public class progressSecond extends AppCompatActivity implements View.OnClickLis
 
         // Start the timer
         countDownTimer.start();
+    }
+    @Override
+    protected int getRootLayoutId() {
+        return R.id.progresssecondlayout;
     }
     @Override
     protected void onDestroy() {

@@ -29,19 +29,16 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class MyFireBaseHelper {
-    MyFireBaseHelper myFireBaseHelper;
     FirebaseDatabase database;
     DatabaseReference reference;
     Context myContext;
-    DataSnapshot  dataSnapshot;
     UtilityClass utilityClass;
     ExecutorService executorService;
 
     public MyFireBaseHelper(Context context) {
         utilityClass = new UtilityClass(context);
-        executorService = Executors.newSingleThreadExecutor();
         try {
-            myFireBaseHelper = new MyFireBaseHelper(context);
+            executorService = Executors.newSingleThreadExecutor();
             database = FirebaseDatabase.getInstance();
             reference = database.getReference("Users");
             myContext = context;

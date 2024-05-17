@@ -16,8 +16,9 @@ import com.example.tkfinalproject.R;
 import com.example.tkfinalproject.UI.LogOut.LogOut1;
 import com.example.tkfinalproject.UI.SelectPhone.SelectNewPhone;
 import com.example.tkfinalproject.UI.UpdateUser.UpdateUser;
+import com.example.tkfinalproject.Utility.BaseActivity;
 
-public class FirstPage extends AppCompatActivity implements View.OnClickListener {
+public class FirstPage extends BaseActivity implements View.OnClickListener {
     ImageView updateicon,logouticon;
     Intent intent;
     Button btn;
@@ -34,6 +35,10 @@ public class FirstPage extends AppCompatActivity implements View.OnClickListener
         updateicon.setOnClickListener(this);
         logouticon.setOnClickListener(this);
         btn.setBackgroundResource(R.drawable.button);
+    }
+    @Override
+    protected int getRootLayoutId() {
+        return R.id.Firstpagelayout;
     }
 
     @Override

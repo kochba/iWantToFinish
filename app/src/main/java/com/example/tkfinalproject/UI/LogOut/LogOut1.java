@@ -9,9 +9,10 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.tkfinalproject.R;
+import com.example.tkfinalproject.Utility.BaseActivity;
 import com.example.tkfinalproject.Utility.UtilityClass;
 
-public class LogOut1 extends AppCompatActivity implements View.OnClickListener {
+public class LogOut1 extends BaseActivity implements View.OnClickListener {
 
     Button btn;
     logoutModule module;
@@ -46,5 +47,9 @@ public class LogOut1 extends AppCompatActivity implements View.OnClickListener {
             }
         });
         adb.create().show();
+    }
+    @Override
+    protected int getRootLayoutId() {
+        return R.id.logoutlayout2;
     }
 }

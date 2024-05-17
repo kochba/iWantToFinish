@@ -7,7 +7,9 @@
     tools:context=".UI.mainactivity.MainActivity"
     android:orientation="vertical"
     android:layoutDirection="ltr"
-    android:background="#aaa">
+    android:background="#aaa"
+    android:id="@+id/mainlayout"
+    >
 
     <ImageView
         android:layout_width="250dp"

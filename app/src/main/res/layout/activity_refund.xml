@@ -9,6 +9,7 @@
     android:layoutDirection="ltr"
     >
     <LinearLayout
+        android:id="@+id/refundlayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -87,7 +88,7 @@
                 android:text="אשראי" />
 
             <Button
-                android:id="@+id/button2"
+                android:id="@+id/cancel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -100,7 +101,19 @@
                 android:text="ביטול" />
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_margin="5dp"
+                android:background="@drawable/button"
+                android:fontFamily="@font/myfont"
+                android:textSize="25dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="מידע" />
+            <Button
+                android:id="@+id/cash"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

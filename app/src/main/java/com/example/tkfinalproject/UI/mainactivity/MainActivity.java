@@ -16,9 +16,10 @@ import com.example.tkfinalproject.RePostry.User;
 import com.example.tkfinalproject.UI.FirstPage.FirstPage;
 import com.example.tkfinalproject.UI.Login.login;
 import com.example.tkfinalproject.UI.SignUp.SignUp;
+import com.example.tkfinalproject.Utility.BaseActivity;
 import com.example.tkfinalproject.Utility.LocaleHelper;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends BaseActivity implements View.OnClickListener {
     private Button log,sin;
     MainActivityModule mainActivityModule;
     Intent intent;
@@ -60,6 +61,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         log.setOnClickListener(this);
         sin.setOnClickListener(this);
+    }
+    @Override
+    protected int getRootLayoutId() {
+        return R.id.mainlayout;
     }
     private void setClickTrue(){
         log.setEnabled(true);
