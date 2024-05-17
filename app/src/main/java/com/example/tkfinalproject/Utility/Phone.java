@@ -8,10 +8,11 @@ public class Phone implements Serializable {
     String currentPhone;
     String stauts;
 
-    public Phone(int code, String amount, String currentPhone) {
+    public Phone(int code, String amount, String currentPhone,String stauts) {
         this.code = code;
         this.amount = amount;
         this.currentPhone = currentPhone;
+        this.stauts = stauts;
     }
 
     public String getCurrentPhone() {

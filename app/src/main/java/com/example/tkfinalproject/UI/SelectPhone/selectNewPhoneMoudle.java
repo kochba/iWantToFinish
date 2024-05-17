@@ -79,13 +79,13 @@ public class selectNewPhoneMoudle {
         int rnd = random.nextInt(101) + 1;
         String chooesdPhone = autoCompleteBrand.getText().toString() + " " + autoCompleteModel.getText().toString() + " " + autoCompleteCapacity.getText().toString();
         if (rnd <= 15){
-          return new Phone(1,csvReader.getpriceByCode(myContext, autoCompleteBrand.getText().toString(),autoCompleteModel.getText().toString(),autoCompleteCapacity.getText().toString(),4),chooesdPhone);
+          return new Phone(1,csvReader.getpriceByCode(myContext, autoCompleteBrand.getText().toString(),autoCompleteModel.getText().toString(),autoCompleteCapacity.getText().toString(),4),chooesdPhone,"לא תקין");
         } else if (rnd <= 45) {
-            return new Phone(2,csvReader.getpriceByCode(myContext, autoCompleteBrand.getText().toString(),autoCompleteModel.getText().toString(),autoCompleteCapacity.getText().toString(),3),chooesdPhone);
+            return new Phone(2,csvReader.getpriceByCode(myContext, autoCompleteBrand.getText().toString(),autoCompleteModel.getText().toString(),autoCompleteCapacity.getText().toString(),3),chooesdPhone,"מסך קדמי/אחורי שבור");
         } else if (rnd <= 80) {
-            return new Phone(3,csvReader.getpriceByCode(myContext, autoCompleteBrand.getText().toString(),autoCompleteModel.getText().toString(),autoCompleteCapacity.getText().toString(),2),chooesdPhone);
+            return new Phone(3,csvReader.getpriceByCode(myContext, autoCompleteBrand.getText().toString(),autoCompleteModel.getText().toString(),autoCompleteCapacity.getText().toString(),2),chooesdPhone,"תקין");
         } else {
-            return new Phone(4,csvReader.getpriceByCode(myContext, autoCompleteBrand.getText().toString(),autoCompleteModel.getText().toString(),autoCompleteCapacity.getText().toString(),1),chooesdPhone);
+            return new Phone(4,csvReader.getpriceByCode(myContext, autoCompleteBrand.getText().toString(),autoCompleteModel.getText().toString(),autoCompleteCapacity.getText().toString(),1),chooesdPhone,"תקין+");
         }
     }
 //    public createphone(View v, com.google.android.material.textfield.TextInputLayout inputModel, com.google.android.material.textfield.TextInputLayout inputcapcity, AutoCompleteTextView autoCompleteBrand, AutoCompleteTextView autoCompleteModel, AutoCompleteTextView autoCompleteCapacity){

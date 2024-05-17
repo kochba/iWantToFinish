@@ -75,20 +75,21 @@ public class firstFragment extends Fragment {
         try {
             phone = (Phone)getActivity().getIntent().getSerializableExtra("price");
             editText.setText(phone.getCurrentPhone());
-            switch (phone.getCode()){
-                case 1:
-                    editText2.setText("לא תקין");
-                    break;
-                case 2:
-                    editText2.setText("מסך קדמי/אחורי שבור");
-                    break;
-                case 3:
-                    editText2.setText("תקין");
-                    break;
-                case 4:
-                    editText2.setText("תקין+");
-                    break;
-            }
+            editText2.setText(phone.getStauts());
+//            switch (phone.getCode()){
+//                case 1:
+//                    editText2.setText("לא תקין");
+//                    break;
+//                case 2:
+//                    editText2.setText("מסך קדמי/אחורי שבור");
+//                    break;
+//                case 3:
+//                    editText2.setText("תקין");
+//                    break;
+//                case 4:
+//                    editText2.setText("תקין+");
+//                    break;
+//            }
         } catch (Exception e){
             intent = new Intent(getActivity(), FirstPage.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

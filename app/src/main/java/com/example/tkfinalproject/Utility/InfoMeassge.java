@@ -1,38 +1,29 @@
 package com.example.tkfinalproject.Utility;
 
+import android.content.Context;
+
+import com.example.tkfinalproject.RePostry.Repostry;
+import com.example.tkfinalproject.RePostry.User;
+
 public class InfoMeassge {
+    String name;
+    Phone phone;
+    String Method;
+    Repostry repostry;
+    public InfoMeassge(Phone phone, String method, Context context) {
+        repostry = new Repostry(context);
+        this.name = repostry.getCurrentUser().getUsername();
+        this.phone = phone;
+        this.Method = method;
+    }
     public String getName() {
         return name;
-    }
-
-    public String getAmount() {
-        return amount;
-    }
-
-    public String getCurrentPhone() {
-        return currentPhone;
-    }
-
-    public String getStauts() {
-        return stauts;
     }
 
     public String getMethod() {
         return Method;
     }
-
-    String name;
-    String amount;
-    String currentPhone;
-    String stauts;
-    String Method;
-    public InfoMeassge(String name, String amount, String currentPhone, String stauts, String method) {
-        this.name = name;
-        this.amount = amount;
-        this.currentPhone = currentPhone;
-        this.stauts = stauts;
-        Method = method;
+    public Phone getPhone() {
+        return phone;
     }
-
-
 }

@@ -15,6 +15,7 @@ import android.widget.EditText;
 import com.braintreepayments.cardform.view.CardForm;
 import com.example.tkfinalproject.R;
 import com.example.tkfinalproject.Utility.InfoMeassge;
+import com.example.tkfinalproject.Utility.Phone;
 import com.example.tkfinalproject.Utility.SmsSender;
 import com.example.tkfinalproject.Utility.UtilityClass;
 
@@ -33,6 +34,7 @@ public class creditCard extends Fragment implements View.OnClickListener {
     UtilityClass utilityClass;
     Button btn;
     CardForm cardForm;
+    Phone phone;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -74,6 +76,7 @@ public class creditCard extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_credit_card, container, false);
+        phone = (Phone)getActivity().getIntent().getSerializableExtra("price");
         utilityClass = new UtilityClass(getActivity());
         btn = view.findViewById(R.id.aprrovecard);
         btn.setOnClickListener(this);
@@ -104,7 +107,7 @@ public class creditCard extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View view) {
         if (cardForm.isValid()){
-           // SmsSender.sendSms("+1234567890",new InfoMeassge());
+            SmsSender.sendSms("+1234567890",new InfoMeassge(phone,"אשראי",getActivity()));
         }
         else {
             cardForm.validate();

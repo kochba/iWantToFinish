@@ -15,10 +15,10 @@ public class SmsSender {
         Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
         String messageBody = "תודה " + infoMeassge.getName() + " שביצעת טרייד-אין עם RePepHole\n" +
                 "פרטי הטרייד אין:\n" +
-                "מכשיר - " + infoMeassge.getCurrentPhone() + "\n" +
-                "זיכוי – " + infoMeassge.getAmount() + "\n" +
-                "מצב המכשיר - " + infoMeassge.getStauts() + "\n" +
-                "דרך התשלום – " + infoMeassge.Method + "\n" +
+                "מכשיר - " + infoMeassge.getPhone().getCurrentPhone() + "\n" +
+                "זיכוי – " + infoMeassge.getPhone().getAmount() + "\n" +
+                "מצב המכשיר - " + infoMeassge.getPhone().getStauts() + "\n" +
+                "דרך התשלום – " + infoMeassge.getMethod() + "\n" +
                 "ניפגש בפעמים הבאות!";
 
 
