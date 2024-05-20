@@ -1,6 +1,6 @@
 package com.example.tkfinalproject.UI.Fragments;
 
-import android.graphics.Color;
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -11,13 +11,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import androidx.annotation.NonNull;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 
 import com.braintreepayments.cardform.view.CardForm;
 import com.example.tkfinalproject.R;
+import com.example.tkfinalproject.UI.RefundActivity.Refund;
 import com.example.tkfinalproject.Utility.InfoMeassge;
+import com.example.tkfinalproject.Utility.LocaleHelper;
 import com.example.tkfinalproject.Utility.Phone;
 import com.example.tkfinalproject.Utility.SmsSender;
 import com.example.tkfinalproject.Utility.UtilityClass;
+
+import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -35,6 +42,7 @@ public class creditCard extends Fragment implements View.OnClickListener {
     Button btn;
     CardForm cardForm;
     Phone phone;
+    Refund refund;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -62,19 +70,21 @@ public class creditCard extends Fragment implements View.OnClickListener {
         return fragment;
     }
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (savedInstanceState != null){
+            LocaleHelper.setLocale(getActivity(), "he");
+        }
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_credit_card, container, false);
         phone = (Phone)getActivity().getIntent().getSerializableExtra("price");
         utilityClass = new UtilityClass(getActivity());
@@ -107,7 +117,7 @@ public class creditCard extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View view) {
         if (cardForm.isValid()){
-            SmsSender.sendSms("+1234567890",new InfoMeassge(phone,"אשראי",getActivity()));
+            SmsSender.sendSms(cardForm.getMobileNumber(),new InfoMeassge(phone,"אשראי",getActivity()));
         }
         else {
             cardForm.validate();

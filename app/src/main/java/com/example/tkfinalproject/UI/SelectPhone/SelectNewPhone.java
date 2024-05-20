@@ -33,7 +33,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Random;
 
-public class SelectNewPhone extends AppCompatActivity implements View.OnClickListener {
+public class SelectNewPhone extends BaseActivity implements View.OnClickListener {
     private static final int TARGET_WIDTH = 1080;
     private static final int TARGET_HEIGHT = 2200;
     com.google.android.material.textfield.TextInputLayout inputModel, inputcapacity;
@@ -268,5 +268,10 @@ public class SelectNewPhone extends AppCompatActivity implements View.OnClickLis
 
             child.setLayoutParams(params);
         }
+    }
+
+    @Override
+    protected int getRootLayoutId() {
+        return R.id.selectlayout;
     }
 }

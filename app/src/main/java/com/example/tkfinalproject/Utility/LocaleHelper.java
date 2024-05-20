@@ -6,10 +6,12 @@ import android.content.res.Resources;
 import android.os.Build;
 import android.os.LocaleList;
 
+import org.checkerframework.checker.units.qual.C;
+
 import java.util.Locale;
 
 public class LocaleHelper {
-    public static void setLocale(Context context, String languageCode) {
+    public static Context setLocale(Context context, String languageCode) {
         Locale locale = new Locale(languageCode);
         Locale.setDefault(locale);
 
@@ -29,6 +31,10 @@ public class LocaleHelper {
             configuration.locale = locale;
             resources.updateConfiguration(configuration, resources.getDisplayMetrics());
         }
-
+        return context;
+    }
+    public static boolean isLocaleSet(Context context, String languageCode) {
+        Locale current = context.getResources().getConfiguration().locale;
+        return current.getLanguage().equals(languageCode);
     }
 }

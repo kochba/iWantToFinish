@@ -10,15 +10,22 @@
     android:background="#aaa"
     android:id="@+id/mainlayout"
     >
-
-    <ImageView
+    <ProgressBar
+        android:id="@+id/progressmain"
+        style="@style/CustomProgressBar"
         android:layout_width="250dp"
         android:layout_height="250dp"
-        android:src="@drawable/newlogo"
-        android:layout_marginTop="55dp"
         android:layout_gravity="center"
+        android:layout_marginTop="55dp"
+        android:visibility="gone"
         />
-
+    <ImageView
+        android:id="@+id/logomain"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="55dp"
+        android:src="@drawable/newlogo" />
     <Button
         android:id="@+id/login"
         android:layout_width="220dp"
@@ -46,7 +53,4 @@
         android:fontFamily="@font/myfont"
         android:enabled="false"
         />
-
-
-
 </LinearLayout>

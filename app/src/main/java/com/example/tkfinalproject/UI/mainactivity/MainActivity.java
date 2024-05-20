@@ -31,7 +31,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         closeContextMenu();
-        LocaleHelper.setLocale(this, "iw");
         log = findViewById(R.id.login);
         sin = findViewById(R.id.signup);
         mainActivityModule = new MainActivityModule(this);
@@ -43,14 +42,17 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
         boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
         if (isConnected){
+            super.showLoadingOverlay();
             mainActivityModule.StartLogin(user, new com.example.tkfinalproject.RePostry.MyFireBaseHelper.checkUser() {
                 @Override
                 public void onCheckedUser(boolean flag) {
                     if (flag){
+                        MainActivity.super.hideLoadingOverlay();
                         mainActivityModule.setUser(user);
                         startActivity(intent);
                     }
                     else {
+                        MainActivity.super.hideLoadingOverlay();
                         setClickTrue();
                     }
                 }

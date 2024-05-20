@@ -3,4 +3,7 @@
     <style name="mybutton">
         <item name="background">@drawable/button</item>
     </style>
+    <style name="CustomProgressBar">
+        <item name="android:indeterminateDrawable">@drawable/rotate</item>
+    </style>
 </resources>

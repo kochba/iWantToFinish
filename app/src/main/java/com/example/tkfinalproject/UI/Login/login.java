@@ -84,6 +84,7 @@ public class login extends BaseActivity implements View.OnClickListener {
         //ניתן להתחבר אם כבר הייתה כניסה והוא קיים בDb
         //לעשות בדיקה שהאימייל לא קיים
         btn.setEnabled(false);
+        super.showLoadingOverlay();
         ConnectivityManager cm = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
         boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
@@ -126,6 +127,7 @@ public class login extends BaseActivity implements View.OnClickListener {
                             });
                             adb.create().show();
                             btn.setEnabled(true);
+                            login.super.hideLoadingOverlay();
                         }
                     }
                 });
@@ -142,6 +144,7 @@ public class login extends BaseActivity implements View.OnClickListener {
             });
             adb.create().show();
             btn.setEnabled(true);
+            super.hideLoadingOverlay();
         }
     }
 }

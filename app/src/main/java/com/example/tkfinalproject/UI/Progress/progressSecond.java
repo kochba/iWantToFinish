@@ -13,6 +13,7 @@ import com.example.tkfinalproject.R;
 import com.example.tkfinalproject.UI.FirstPage.FirstPage;
 import com.example.tkfinalproject.UI.RefundActivity.Refund;
 import com.example.tkfinalproject.Utility.BaseActivity;
+import com.example.tkfinalproject.Utility.LocaleHelper;
 
 public class progressSecond extends BaseActivity implements View.OnClickListener {
 

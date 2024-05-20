@@ -31,7 +31,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class MyFireBaseHelper {
-    MyFireBaseHelper myFireBaseHelper;
     FirebaseDatabase database;
     DatabaseReference reference;
     Context myContext;
@@ -44,7 +43,6 @@ public class MyFireBaseHelper {
         try {
             executorService = Executors.newSingleThreadExecutor();
             connectivityListener = new ConnectivityListener(context);
-            myFireBaseHelper = new MyFireBaseHelper(context);
             database = FirebaseDatabase.getInstance();
             reference = database.getReference("Users");
             myContext = context;

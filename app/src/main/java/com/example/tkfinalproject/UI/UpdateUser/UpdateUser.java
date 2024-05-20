@@ -93,6 +93,7 @@ public class UpdateUser extends BaseActivity implements View.OnClickListener {
     @Override
     public void onClick(View view) {
         Update.setEnabled(false);
+        super.showLoadingOverlay();
         ConnectivityManager cm = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
         boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
@@ -100,10 +101,12 @@ public class UpdateUser extends BaseActivity implements View.OnClickListener {
         if (editTextName.getText().length() < 8){
             showalert("יש בעיה חבר!","שם משתמש קצר משמונה");
             Update.setEnabled(true);
+            super.hideLoadingOverlay();
         }
         else if (editTextPass.getText().length() < 6){
             showalert("יש בעיה חבר!","סיסמה קצרה מ6");
             Update.setEnabled(true);
+            super.hideLoadingOverlay();
         }
         else if (isConnected){
             user = new User(sp.getString("UserName",""),sp.getString("UserPass",""));
@@ -120,14 +123,17 @@ public class UpdateUser extends BaseActivity implements View.OnClickListener {
                             moudle.setUser(editTextName,editTextPass);
                             showalert("עדכון סיסמה הצליח!","אתה יכול להמשיך להשתמש באפלייקצייה",intent);
                             Update.setEnabled(true);
+                            UpdateUser.super.hideLoadingOverlay();
                             break;
                         case 1:
                             showalert("העדכון נכשל!","נסה שוב");
                             Update.setEnabled(true);
+                            UpdateUser.super.hideLoadingOverlay();
                             break;
                         case 2:
                             showalert("יש בעיה חבר!","השם משתמש החדש כבר קיים במערכת");
                             Update.setEnabled(true);
+                            UpdateUser.super.hideLoadingOverlay();
                     }
                 }
             });
@@ -135,6 +141,7 @@ public class UpdateUser extends BaseActivity implements View.OnClickListener {
         else {
             showalert("יש בעיה חבר!","אין אינטרנט חבר אי אפשר לעדכן סיסמה");
             Update.setEnabled(true);
+            super.hideLoadingOverlay();
         }
     }
 

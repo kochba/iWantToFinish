@@ -1,9 +1,11 @@
 package com.example.tkfinalproject.UI.RefundActivity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -31,6 +33,8 @@ public class Refund extends BaseActivity {
     EditText editText;
     Phone phone;
     private Intent intent;
+    boolean reset;
+    int currentFragment;
     private Button button1, button2, button3, button4;
     private Fragment fragment1, fragment2, fragment3, fragment4;
 
@@ -38,7 +42,6 @@ public class Refund extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_refund);
-        LocaleHelper.setLocale(this, "iw");
         fragment1 = new creditCard();
         fragment2 = new cancelFragment();
         fragment3 = new firstFragment();
@@ -76,11 +79,36 @@ public class Refund extends BaseActivity {
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         }
-        button1.setOnClickListener(view -> showFragment(fragment1, 1));
-        button2.setOnClickListener(view -> showFragment(fragment2, 2));
-        button3.setOnClickListener(view -> showFragment(fragment3, 3));
-        button4.setOnClickListener(view -> showFragment(fragment4, 4));
-        showFragment(fragment3, 3);
+        button1.setOnClickListener(view -> showFragment(1));
+        button2.setOnClickListener(view -> showFragment(2));
+        button3.setOnClickListener(view -> showFragment(3));
+        button4.setOnClickListener(view -> showFragment(4));
+        reset = true;
+        if (savedInstanceState != null){
+            showFragment(savedInstanceState.getInt("code"));
+            if (savedInstanceState.getBoolean("reset")){
+                savedInstanceState.putBoolean("reset",false);
+                reset = false;
+                this.recreate();
+            }
+        }else {
+            showFragment(3);
+        }
+    }
+
+    public static Context getContext(){
+        if (getContext() != null){
+            return getContext();
+        }
+        else {
+            return null;
+        }
+    }
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("code",currentFragment);
+        outState.putBoolean("reset",reset);
     }
     @Override
     protected int getRootLayoutId() {
@@ -95,11 +123,29 @@ public class Refund extends BaseActivity {
 //                .replace(R.id.fragmentContainerView, creditCard.class,null)
 //                .commit();
 //    }
-    private void showFragment(Fragment fragment, int code) {
-        // Replace fragment in container
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragmentContainerView, fragment)
-                .commit();
+    private void showFragment(int code) {
+        currentFragment = code;
+        switch (code){
+            case 1:
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragmentContainerView, fragment1)
+                        .commit();
+                break;
+            case 2:
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragmentContainerView, fragment2)
+                        .commit();
+                break;
+            case 3:
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragmentContainerView, fragment3)
+                        .commit();
+                break;
+            case 4:
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragmentContainerView, fragment4)
+                        .commit();
+        }
 
         // Update button visibility based on the current fragment
         if (code == 1) {

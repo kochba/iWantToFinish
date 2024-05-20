@@ -25,6 +25,7 @@ import com.example.tkfinalproject.RePostry.MyDataBaseHelper;
 import com.example.tkfinalproject.RePostry.User;
 import com.example.tkfinalproject.UI.FirstPage.FirstPage;
 import com.example.tkfinalproject.UI.Login.login;
+import com.example.tkfinalproject.UI.mainactivity.MainActivity;
 import com.example.tkfinalproject.Utility.BaseActivity;
 import com.example.tkfinalproject.Utility.IonComplete;
 import com.example.tkfinalproject.Utility.LocaleHelper;
@@ -121,6 +122,7 @@ public class SignUp extends BaseActivity implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         btn.setEnabled(false);
+        super.showLoadingOverlay();
         if (name.getText().length() < 8){
             //aletr קצר משמונה
             AlertDialog.Builder adb = new AlertDialog.Builder(this);
@@ -135,6 +137,7 @@ public class SignUp extends BaseActivity implements View.OnClickListener {
             });
             adb.create().show();
             btn.setEnabled(true);
+            super.hideLoadingOverlay();
         }
         else if (pass.getText().length() < 6){
             AlertDialog.Builder adb = new AlertDialog.Builder(this);
@@ -149,6 +152,7 @@ public class SignUp extends BaseActivity implements View.OnClickListener {
             });
             adb.create().show();
             btn.setEnabled(true);
+            super.hideLoadingOverlay();
         }
         else if (!pass.getText().toString().equals(eqpass.getText().toString())) {
             AlertDialog.Builder adb = new AlertDialog.Builder(this);
@@ -163,6 +167,7 @@ public class SignUp extends BaseActivity implements View.OnClickListener {
             });
             adb.create().show();
             btn.setEnabled(true);
+            super.hideLoadingOverlay();
         }
         else {
             ConnectivityManager cm = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -201,6 +206,7 @@ public class SignUp extends BaseActivity implements View.OnClickListener {
                                 });
                                 adb.create().show();
                                 btn.setEnabled(true);
+                                SignUp.super.hideLoadingOverlay();
                                 break;
                             case 2:
                                 adb.setTitle("יש בעיה חבר!");
@@ -214,6 +220,7 @@ public class SignUp extends BaseActivity implements View.OnClickListener {
                                 });
                                 adb.create().show();
                                 btn.setEnabled(true);
+                                SignUp.super.hideLoadingOverlay();
                                 break;
                         }
 
@@ -232,6 +239,7 @@ public class SignUp extends BaseActivity implements View.OnClickListener {
                 });
                 adb.create().show();
                 btn.setEnabled(true);
+                super.hideLoadingOverlay();
             }
         }
     }

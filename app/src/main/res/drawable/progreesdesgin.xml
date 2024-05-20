@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="ring"
+    android:useLevel="false"
+    android:angle="0"
+    android:startColor="@color/mygreen"
+    android:endColor="@color/mygreen"
+    android:type="sweep">
+    <size
+        android:width="250dp"
+        android:height="250dp" />
+    <stroke
+        android:width="15dp"
+        android:color="@color/mygreen"
+        android:dashWidth="10dp"
+        android:dashGap="@dimen/bt_margin"/>
+</shape>
