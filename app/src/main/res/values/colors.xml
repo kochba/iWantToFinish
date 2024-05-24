@@ -6,5 +6,10 @@
     <color name="myred">#BF4AA1</color>
     <color name="otherred">#D50000</color>
     <color name="newred">#D32F2F</color>
+    <color name="complementary_blue">#1E88E5</color>
+    <color name="complementary_red">#E51E1E</color>
+    <color name="creditcard">#1976D2</color>
+    <color name="cash">#4CAF50</color>
+
 
 </resources>

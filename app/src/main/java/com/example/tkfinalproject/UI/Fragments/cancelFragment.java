@@ -15,13 +15,14 @@ import android.widget.Button;
 import com.example.tkfinalproject.R;
 import com.example.tkfinalproject.UI.FirstPage.FirstPage;
 import com.example.tkfinalproject.Utility.UtilityClass;
+import com.example.tkfinalproject.Utility.basefragment;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link cancelFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class cancelFragment extends Fragment implements View.OnClickListener {
+public class cancelFragment extends basefragment implements View.OnClickListener {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -72,6 +73,7 @@ public class cancelFragment extends Fragment implements View.OnClickListener {
         View view = inflater.inflate(R.layout.fragment_cancel, container, false);
         button = view.findViewById(R.id.mycancelbutton);
         button.setOnClickListener(this);
+        super.ajustdsize(requireActivity(), view);
         return view;
     }
 

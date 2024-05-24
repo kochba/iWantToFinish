@@ -33,8 +33,4 @@ public class LocaleHelper {
         }
         return context;
     }
-    public static boolean isLocaleSet(Context context, String languageCode) {
-        Locale current = context.getResources().getConfiguration().locale;
-        return current.getLanguage().equals(languageCode);
-    }
 }

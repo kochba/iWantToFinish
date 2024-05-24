@@ -3,9 +3,15 @@ import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.util.DisplayMetrics;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.widget.AutoCompleteTextView;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.LayoutRes;
 import androidx.annotation.Nullable;
@@ -14,7 +20,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.tkfinalproject.R;
 
 public abstract class BaseActivity extends AppCompatActivity{
-    private static final int TARGET_WIDTH = 1080 ;
+    private static final int TARGET_WIDTH = 1080;
     private static final int TARGET_HEIGHT = 2200;
     private ViewGroup mainContent;
     public void setContentView(@LayoutRes int layoutResID) {
@@ -75,31 +81,69 @@ public abstract class BaseActivity extends AppCompatActivity{
     }
 
     protected abstract int getRootLayoutId();
-    private void adjustSizesAndMargins(float widthScaleFactor, float heightScaleFactor,View rootView) {
-        if (rootView instanceof LinearLayout) {
-            LinearLayout linearLayout = (LinearLayout) rootView;
-            for (int i = 0; i < linearLayout.getChildCount(); i++) {
-                View child = linearLayout.getChildAt(i);
-                LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) child.getLayoutParams();
+    private void adjustSizesAndMargins(float widthScaleFactor, float heightScaleFactor, View rootView) {
+        if (rootView instanceof ViewGroup) {
+            ViewGroup viewGroup = (ViewGroup) rootView;
+            for (int i = 0; i < viewGroup.getChildCount(); i++) {
+                View child = viewGroup.getChildAt(i);
+                ViewGroup.LayoutParams params = child.getLayoutParams();
 
-                // Adjust width and height
-                if (params.width != LinearLayout.LayoutParams.WRAP_CONTENT &&
-                        params.width != LinearLayout.LayoutParams.MATCH_PARENT) {
-                    params.width = Math.round(params.width * widthScaleFactor);
+                if (params instanceof ViewGroup.MarginLayoutParams) {
+                    ViewGroup.MarginLayoutParams marginParams = (ViewGroup.MarginLayoutParams) params;
+                    // Adjust text size if the child is a TextView or its subclass
+                    if (child instanceof TextView) {
+                        TextView textView = (TextView) child;
+                        float textSize = textView.getTextSize(); // getTextSize() returns the size in pixels
+                        textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize * heightScaleFactor);
+                    }
+
+                    // Adjust width and height
+                    if (marginParams.width != ViewGroup.LayoutParams.WRAP_CONTENT &&
+                            marginParams.width != ViewGroup.LayoutParams.MATCH_PARENT) {
+                        marginParams.width = Math.round(marginParams.width * widthScaleFactor);
+                    }
+                    if (marginParams.height != ViewGroup.LayoutParams.WRAP_CONTENT &&
+                            marginParams.height != ViewGroup.LayoutParams.MATCH_PARENT) {
+                        marginParams.height = Math.round(marginParams.height * heightScaleFactor);
+                    }
+
+                    // Adjust margins
+                    marginParams.leftMargin = Math.round(marginParams.leftMargin * widthScaleFactor);
+                    marginParams.rightMargin = Math.round(marginParams.rightMargin * widthScaleFactor);
+                    marginParams.topMargin = Math.round(marginParams.topMargin * heightScaleFactor);
+                    marginParams.bottomMargin = Math.round(marginParams.bottomMargin * heightScaleFactor);
+
+                    child.setLayoutParams(marginParams);
+                    // Adjust width and height of buttons with wrap_content considering weight
+                    if (child instanceof Button && params.width == ViewGroup.LayoutParams.WRAP_CONTENT) {
+                        child.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                            @Override
+                            public void onGlobalLayout() {
+                                if (child.getWidth() > 0 && child.getHeight() > 0) {
+                                    int newHeight = Math.round(child.getHeight() * heightScaleFactor);
+                                    // Adjust margins
+                                    marginParams.leftMargin = Math.round(marginParams.leftMargin * widthScaleFactor);
+                                    marginParams.rightMargin = Math.round(marginParams.rightMargin * widthScaleFactor);
+                                    marginParams.topMargin = Math.round(marginParams.topMargin * heightScaleFactor);
+                                    marginParams.bottomMargin = Math.round(marginParams.bottomMargin * heightScaleFactor);
+                                    TextView textView = (TextView) child;
+                                    float textSize = textView.getTextSize(); // getTextSize() returns the size in pixels
+                                    textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize * heightScaleFactor);
+                                    marginParams.height = newHeight;
+                                    child.setLayoutParams(marginParams);
+                                    child.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                                }
+                            }
+                        });
+                    }
                 }
-                if (params.height != LinearLayout.LayoutParams.WRAP_CONTENT &&
-                        params.height != LinearLayout.LayoutParams.MATCH_PARENT) {
-                    params.height = Math.round(params.height * heightScaleFactor);
-                }
 
-                // Adjust margins
-                params.leftMargin = Math.round(params.leftMargin * widthScaleFactor);
-                params.rightMargin = Math.round(params.rightMargin * widthScaleFactor);
-                params.topMargin = Math.round(params.topMargin * heightScaleFactor);
-                params.bottomMargin = Math.round(params.bottomMargin * heightScaleFactor);
-
-                child.setLayoutParams(params);
+                // Recursively adjust sizes and margins for child views
+                adjustSizesAndMargins(widthScaleFactor, heightScaleFactor, child);
             }
         }
     }
+
+
+
 }

@@ -14,13 +14,14 @@ import com.example.tkfinalproject.R;
 import com.example.tkfinalproject.UI.FirstPage.FirstPage;
 import com.example.tkfinalproject.UI.RefundActivity.Refund;
 import com.example.tkfinalproject.Utility.Phone;
+import com.example.tkfinalproject.Utility.basefragment;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link firstFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class firstFragment extends Fragment {
+public class firstFragment extends basefragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -95,11 +96,7 @@ public class firstFragment extends Fragment {
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         }
-
-
-
-
-
+        super.ajustdsize(requireActivity(),view);
         return view;
     }
 }

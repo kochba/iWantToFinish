@@ -9,10 +9,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.TypedValue;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.tkfinalproject.R;
@@ -27,8 +30,8 @@ import com.example.tkfinalproject.Utility.LocaleHelper;
 import com.example.tkfinalproject.Utility.Phone;
 
 public class Refund extends BaseActivity {
-//    private static final int TARGET_WIDTH = 1080 ;
-//    private static final int TARGET_HEIGHT = 2200;
+    private static final int TARGET_WIDTH = 1080 ;
+    private static final int TARGET_HEIGHT = 2200;
     FragmentManager fragmentManager;
     EditText editText;
     Phone phone;
@@ -54,22 +57,6 @@ public class Refund extends BaseActivity {
         button2.setVisibility(View.VISIBLE);
         button3.setVisibility(View.GONE);
         button4.setVisibility(View.VISIBLE);
-//        // Get the dimensions of the current device
-//        DisplayMetrics displayMetrics = new DisplayMetrics();
-//        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-//        int currentWidth = displayMetrics.widthPixels;
-//        int currentHeight = displayMetrics.heightPixels;
-//
-//        // Calculate the scaling factors
-//        float widthScaleFactor = (float) currentWidth / TARGET_WIDTH;
-//        float heightScaleFactor = (float) currentHeight / TARGET_HEIGHT;
-//
-//        // Adjust sizes and margins
-//        adjustSizesAndMargins(widthScaleFactor, heightScaleFactor);
-        fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.fragmentContainerView, firstFragment.class, null)
-                .commit();
         editText = findViewById(R.id.finalprice);
         phone = (Phone) getIntent().getSerializableExtra("price");
         try {
