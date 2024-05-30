@@ -8,12 +8,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.braintreepayments.cardform.view.CardForm;
+import com.braintreepayments.cardform.view.ErrorEditText;
 
 public class basefragment extends Fragment {
     private static final int TARGET_WIDTH = 1080;
@@ -64,7 +66,16 @@ public class basefragment extends Fragment {
                     marginParams.topMargin = Math.round(marginParams.topMargin * heightScaleFactor);
                     marginParams.bottomMargin = Math.round(marginParams.bottomMargin * heightScaleFactor);
 
-                    child.setLayoutParams(marginParams);
+//                    if (!(child instanceof CardForm)){
+//                        // Adjust padding
+//                        int paddingLeft = Math.round(child.getPaddingLeft() * widthScaleFactor);
+//                        int paddingTop = Math.round(child.getPaddingTop() * heightScaleFactor);
+//                        int paddingRight = Math.round(child.getPaddingRight() * widthScaleFactor);
+//                        int paddingBottom = Math.round(child.getPaddingBottom() * heightScaleFactor);
+//                        child.setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom);
+//
+//                        child.setLayoutParams(marginParams);
+//                    }
                 }
 
                 // Recursively adjust sizes and margins for child views

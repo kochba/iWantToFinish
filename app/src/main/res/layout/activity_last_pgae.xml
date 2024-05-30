@@ -9,7 +9,7 @@
     android:background="#aaa"
     >
     <LinearLayout
-        android:id="@+id/updatelayout"
+        android:id="@+id/lastlayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -84,7 +84,7 @@
             android:inputType="textEmailAddress"
             android:gravity="center"
             maxLines="1"
-            android:maxLength="25"
+            android:maxLength="30"
             android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890@."
             />
         <Button
@@ -99,7 +99,6 @@
             android:text="להשלמת עסקת הטרייד-אין"
             android:textSize="28sp"
             android:fontFamily="@font/myfont"
-            android:enabled="false"
             />
 
 

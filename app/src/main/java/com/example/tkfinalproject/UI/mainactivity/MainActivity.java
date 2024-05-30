@@ -1,7 +1,5 @@
 package com.example.tkfinalproject.UI.mainactivity;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -17,7 +15,6 @@ import com.example.tkfinalproject.UI.FirstPage.FirstPage;
 import com.example.tkfinalproject.UI.Login.login;
 import com.example.tkfinalproject.UI.SignUp.SignUp;
 import com.example.tkfinalproject.Utility.BaseActivity;
-import com.example.tkfinalproject.Utility.LocaleHelper;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
     private Button log,sin;

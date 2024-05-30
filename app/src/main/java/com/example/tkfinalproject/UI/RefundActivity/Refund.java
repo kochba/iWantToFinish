@@ -1,32 +1,23 @@
 package com.example.tkfinalproject.UI.RefundActivity;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
-import android.util.TypedValue;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.example.tkfinalproject.R;
 import com.example.tkfinalproject.UI.FirstPage.FirstPage;
 import com.example.tkfinalproject.UI.Fragments.cancelFragment;
+import com.example.tkfinalproject.UI.Fragments.cashfragment;
 import com.example.tkfinalproject.UI.Fragments.creditCard;
 import com.example.tkfinalproject.UI.Fragments.firstFragment;
-import com.example.tkfinalproject.UI.Progress.progerssFirst;
-import com.example.tkfinalproject.UI.Progress.progressSecond;
 import com.example.tkfinalproject.Utility.BaseActivity;
-import com.example.tkfinalproject.Utility.LocaleHelper;
 import com.example.tkfinalproject.Utility.Phone;
 
 public class Refund extends BaseActivity {
@@ -48,7 +39,7 @@ public class Refund extends BaseActivity {
         fragment1 = new creditCard();
         fragment2 = new cancelFragment();
         fragment3 = new firstFragment();
-        fragment4 = new firstFragment();
+        fragment4 = new cashfragment();
         button1 = findViewById(R.id.creditbutton);
         button2 = findViewById(R.id.cancel);
         button3 = findViewById(R.id.info);

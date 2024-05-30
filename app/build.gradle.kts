@@ -34,6 +34,7 @@ android {
 
 dependencies {
     implementation ("androidx.fragment:fragment:1.6.2")
+    implementation ("androidx.core:core-ktx:1.7.0")
     implementation ("com.opencsv:opencsv:5.5.2")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.11.0")
@@ -46,4 +47,6 @@ dependencies {
     implementation(platform("com.google.firebase:firebase-bom:32.8.0"))
     implementation("com.google.firebase:firebase-analytics")
     implementation ("com.braintreepayments:card-form:5.4.0")
+    implementation ("commons-validator:commons-validator:1.7")
+    implementation ("com.googlecode.libphonenumber:libphonenumber:8.12.54")
 }

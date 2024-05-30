@@ -1,23 +1,19 @@
 package com.example.tkfinalproject.UI.Fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import androidx.annotation.NonNull;
 
-import android.widget.Toast;
+import androidx.fragment.app.Fragment;
 
 import com.braintreepayments.cardform.view.CardForm;
 import com.example.tkfinalproject.R;
-import com.example.tkfinalproject.Utility.BaseActivity;
-import com.example.tkfinalproject.Utility.InfoMeassge;
+import com.example.tkfinalproject.UI.LastPage.lastPgae;
 import com.example.tkfinalproject.Utility.LocaleHelper;
 import com.example.tkfinalproject.Utility.Phone;
 import com.example.tkfinalproject.Utility.UtilityClass;
@@ -39,8 +35,6 @@ public class creditCard extends basefragment implements View.OnClickListener {
     Button btn;
     CardForm cardForm;
     Phone phone;
-    Bundle mysavedInstanceState;
-    int code;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -74,11 +68,6 @@ public class creditCard extends basefragment implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         if (savedInstanceState != null){
             LocaleHelper.setLocale(getActivity(), "he");
-            code = savedInstanceState.getInt("code");
-            mysavedInstanceState = savedInstanceState;
-        }
-        else {
-            code = 1;
         }
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
@@ -100,7 +89,6 @@ public class creditCard extends basefragment implements View.OnClickListener {
                 .cardholderName(CardForm.FIELD_REQUIRED)
                 .actionLabel("purchase")
                 .setup(getActivity());
-        addinfo(cardForm);
 //        cardForm.getCvvEditText().setHintTextColor(R.color.black);
 //        cardForm.getCardEditText().setFieldHint(R.string.numberhint);
 //        cardForm.getExpirationDateEditText().setFieldHint(R.string.exphint);
@@ -119,49 +107,14 @@ public class creditCard extends basefragment implements View.OnClickListener {
         return view;
     }
 
-    private void addinfo(CardForm cardForm) {
-        if (mysavedInstanceState != null){
-            if (mysavedInstanceState.getString("name") != null){
-                cardForm.getCardholderNameEditText().setText(mysavedInstanceState.getString("name"));
-                    Toast.makeText(getActivity(), mysavedInstanceState.getString("name"), Toast.LENGTH_SHORT).show();
-            }
-            if (mysavedInstanceState.getString("number") != null){
-                cardForm.getCardEditText().setText(mysavedInstanceState.getString("number"));
-            }
-            if (mysavedInstanceState.getString("cvv") != null){
-                cardForm.getCvvEditText().setText(mysavedInstanceState.getString("cvv"));
-            }
-            if (mysavedInstanceState.getString("month") != null && mysavedInstanceState.getString("year") != null){
-                cardForm.getExpirationDateEditText().setText(mysavedInstanceState.getString("month") + "/" + mysavedInstanceState.getString("year"));
-            }
-        }
-    }
-
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-        if (code == 1){
-            outState.putString("name",cardForm.getCardholderName());
-            outState.putString("number",cardForm.getCardNumber());
-            outState.putString("month",cardForm.getExpirationMonth());
-            outState.putString("year",cardForm.getExpirationYear());
-            outState.putString("cvv",cardForm.getCvv());
-            outState.putInt("code",2);
-        }
-        if (code == 2){
-            outState.putString("name",mysavedInstanceState.getString("name"));
-            outState.putString("number",mysavedInstanceState.getString("number"));
-            outState.putString("month",mysavedInstanceState.getString("month"));
-            outState.putString("year",mysavedInstanceState.getString("year"));
-            outState.putString("cvv",mysavedInstanceState.getString("cvv"));
-            outState.putInt("code",1);
-        }
-    }
 
     @Override
     public void onClick(View view) {
         if (cardForm.isValid()){
-            //SmsSender.sendSms(cardForm.getMobileNumber(),new InfoMeassge(phone,"אשראי",getActivity()));
+            Intent intent = new Intent(getActivity(), lastPgae.class);
+            intent.putExtra("method","אשראי");
+            intent.putExtra("phone",phone);
+            startActivity(intent);
         }
         else {
             cardForm.validate();

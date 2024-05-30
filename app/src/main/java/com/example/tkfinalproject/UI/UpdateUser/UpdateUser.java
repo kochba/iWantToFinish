@@ -102,11 +102,13 @@ public class UpdateUser extends BaseActivity implements View.OnClickListener {
             showalert("יש בעיה חבר!","שם משתמש קצר משמונה");
             Update.setEnabled(true);
             super.hideLoadingOverlay();
+            editTextName.setEnabled(false);
         }
         else if (editTextPass.getText().length() < 6){
             showalert("יש בעיה חבר!","סיסמה קצרה מ6");
             Update.setEnabled(true);
             super.hideLoadingOverlay();
+            editTextName.setEnabled(false);
         }
         else if (isConnected){
             user = new User(sp.getString("UserName",""),sp.getString("UserPass",""));
@@ -124,16 +126,19 @@ public class UpdateUser extends BaseActivity implements View.OnClickListener {
                             showalert("עדכון סיסמה הצליח!","אתה יכול להמשיך להשתמש באפלייקצייה",intent);
                             Update.setEnabled(true);
                             UpdateUser.super.hideLoadingOverlay();
+                            editTextName.setEnabled(false);
                             break;
                         case 1:
                             showalert("העדכון נכשל!","נסה שוב");
                             Update.setEnabled(true);
                             UpdateUser.super.hideLoadingOverlay();
+                            editTextName.setEnabled(false);
                             break;
                         case 2:
                             showalert("יש בעיה חבר!","השם משתמש החדש כבר קיים במערכת");
                             Update.setEnabled(true);
                             UpdateUser.super.hideLoadingOverlay();
+                            editTextName.setEnabled(false);
                     }
                 }
             });
@@ -142,6 +147,7 @@ public class UpdateUser extends BaseActivity implements View.OnClickListener {
             showalert("יש בעיה חבר!","אין אינטרנט חבר אי אפשר לעדכן סיסמה");
             Update.setEnabled(true);
             super.hideLoadingOverlay();
+            editTextName.setEnabled(false);
         }
     }
 

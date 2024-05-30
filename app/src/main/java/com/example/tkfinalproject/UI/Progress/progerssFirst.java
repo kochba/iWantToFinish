@@ -1,7 +1,5 @@
 package com.example.tkfinalproject.UI.Progress;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -12,7 +10,6 @@ import android.widget.ProgressBar;
 import com.example.tkfinalproject.R;
 import com.example.tkfinalproject.UI.FirstPage.FirstPage;
 import com.example.tkfinalproject.Utility.BaseActivity;
-import com.example.tkfinalproject.Utility.Phone;
 
 public class progerssFirst extends BaseActivity implements View.OnClickListener {
     ProgressBar progressBar;
@@ -65,6 +62,7 @@ public class progerssFirst extends BaseActivity implements View.OnClickListener 
 
     @Override
     public void onClick(View view) {
+        countDownTimer.cancel();
         intent = new Intent(progerssFirst.this, FirstPage.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);

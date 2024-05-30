@@ -4,7 +4,8 @@
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.SEND_SMS"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
         android:allowBackup="true"
@@ -16,6 +17,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TkFinalProject"
         tools:targetApi="31">
+        <receiver
+            android:name=".Utility.AlarmReceiver"
+            android:enabled="true"
+            android:exported="false">
+        </receiver>
         <activity
             android:name=".UI.LastPage.lastPgae"
             android:exported="true"

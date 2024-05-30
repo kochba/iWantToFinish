@@ -1,5 +1,6 @@
 package com.example.tkfinalproject.Utility;
 import android.content.pm.ActivityInfo;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.util.DisplayMetrics;
@@ -22,6 +23,9 @@ import com.example.tkfinalproject.R;
 public abstract class BaseActivity extends AppCompatActivity{
     private static final int TARGET_WIDTH = 1080;
     private static final int TARGET_HEIGHT = 2200;
+
+    float heightScaleFactor;
+    float widthScaleFactor;
     private ViewGroup mainContent;
     public void setContentView(@LayoutRes int layoutResID) {
         super.setContentView(layoutResID);
@@ -32,8 +36,8 @@ public abstract class BaseActivity extends AppCompatActivity{
         int currentHeight = displayMetrics.heightPixels;
 
         // Calculate the scaling factors
-        float widthScaleFactor = (float) currentWidth / TARGET_WIDTH;
-        float heightScaleFactor = (float) currentHeight / TARGET_HEIGHT;
+        widthScaleFactor = (float) currentWidth / TARGET_WIDTH;
+        heightScaleFactor = (float) currentHeight / TARGET_HEIGHT;
         adjustSizesAndMargins(widthScaleFactor, heightScaleFactor,findViewById(getRootLayoutId()));
     }
 
@@ -90,11 +94,16 @@ public abstract class BaseActivity extends AppCompatActivity{
 
                 if (params instanceof ViewGroup.MarginLayoutParams) {
                     ViewGroup.MarginLayoutParams marginParams = (ViewGroup.MarginLayoutParams) params;
+
                     // Adjust text size if the child is a TextView or its subclass
                     if (child instanceof TextView) {
                         TextView textView = (TextView) child;
                         float textSize = textView.getTextSize(); // getTextSize() returns the size in pixels
                         textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize * heightScaleFactor);
+
+                        // Adjust drawable padding
+                        int drawablePadding = Math.round(textView.getCompoundDrawablePadding() * widthScaleFactor);
+                        textView.setCompoundDrawablePadding(drawablePadding);
                     }
 
                     // Adjust width and height
@@ -114,6 +123,26 @@ public abstract class BaseActivity extends AppCompatActivity{
                     marginParams.bottomMargin = Math.round(marginParams.bottomMargin * heightScaleFactor);
 
                     child.setLayoutParams(marginParams);
+
+                    // Adjust padding
+                    int paddingLeft = Math.round(child.getPaddingLeft() * widthScaleFactor);
+                    int paddingTop = Math.round(child.getPaddingTop() * heightScaleFactor);
+                    int paddingRight = Math.round(child.getPaddingRight() * widthScaleFactor);
+                    int paddingBottom = Math.round(child.getPaddingBottom() * heightScaleFactor);
+                    child.setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom);
+
+                    // Adjust minimum width and height
+                    int minWidth = Math.round(child.getMinimumWidth() * widthScaleFactor);
+                    int minHeight = Math.round(child.getMinimumHeight() * heightScaleFactor);
+                    child.setMinimumWidth(minWidth);
+                    child.setMinimumHeight(minHeight);
+
+                    // Adjust elevation
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        float elevation = child.getElevation();
+                        child.setElevation(elevation * heightScaleFactor);
+                    }
+
                     // Adjust width and height of buttons with wrap_content considering weight
                     if (child instanceof Button && params.width == ViewGroup.LayoutParams.WRAP_CONTENT) {
                         child.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -143,6 +172,7 @@ public abstract class BaseActivity extends AppCompatActivity{
             }
         }
     }
+
 
 
 

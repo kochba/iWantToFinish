@@ -3,7 +3,6 @@ package com.example.tkfinalproject.Utility;
 import android.content.Context;
 
 import com.example.tkfinalproject.RePostry.Repostry;
-import com.example.tkfinalproject.RePostry.User;
 
 public class InfoMeassge {
     String name;

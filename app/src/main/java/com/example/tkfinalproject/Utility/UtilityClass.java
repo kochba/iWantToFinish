@@ -35,6 +35,43 @@ public class UtilityClass {
         adb.create().show();
     }
 
+    public void showAlertInternet() {
+        adb.setTitle("קרתה שגיאת אינטרנט");
+        adb.setMessage("התחבר לאינטרנט ונסה שוב");
+        adb.setCancelable(false);
+        adb.setPositiveButton("הבנתי", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        adb.create().show();
+    }
+    public void showAlertEmail() {
+        adb.setTitle("יש בעיה חבר");
+        adb.setMessage("מלא כתובת דואר אלקטוני תקינה");
+        adb.setCancelable(false);
+        adb.setPositiveButton("הבנתי", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        adb.create().show();
+    }
+    public void showAlertPhoneNumber() {
+        adb.setTitle("יש בעיה חבר");
+        adb.setMessage("מלא מספר טלפון תקין");
+        adb.setCancelable(false);
+        adb.setPositiveButton("הבנתי", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        adb.create().show();
+    }
+
 //    public void showalert(String head,String body){
 //        adb.setTitle(head);
 //        adb.setMessage(body);

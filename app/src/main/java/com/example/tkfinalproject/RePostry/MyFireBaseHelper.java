@@ -7,7 +7,9 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.Observer;
 
+import com.example.tkfinalproject.Utility.BaseActivity;
 import com.example.tkfinalproject.Utility.ConnectivityListener;
 import com.example.tkfinalproject.Utility.IonComplete;
 import com.example.tkfinalproject.Utility.UtilityClass;
@@ -29,6 +31,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class MyFireBaseHelper {
     FirebaseDatabase database;
@@ -37,8 +41,10 @@ public class MyFireBaseHelper {
     UtilityClass utilityClass;
     ExecutorService executorService;
     ConnectivityListener connectivityListener;
+    AtomicBoolean isConnected = new AtomicBoolean(true); // Track connectivity status
+    private Future<?> currentTask; // Track the current task
 
-    public MyFireBaseHelper(Context context) {
+    public MyFireBaseHelper(Context context, LifecycleOwner lifecycleOwner) {
         utilityClass = new UtilityClass(context);
         try {
             executorService = Executors.newSingleThreadExecutor();
@@ -46,36 +52,48 @@ public class MyFireBaseHelper {
             database = FirebaseDatabase.getInstance();
             reference = database.getReference("Users");
             myContext = context;
-        } catch (Exception e){
+
+            // Observe connectivity changes
+            connectivityListener.observe(lifecycleOwner, new Observer<Boolean>() {
+                @Override
+                public void onChanged(Boolean connected) {
+                    if (!connected) {
+                        stopCurrentTask();
+                    }
+                    isConnected.set(connected);
+                }
+            });
+        } catch (Exception e) {
             utilityClass.showAlertExp();
         }
     }
-    public void addUser(User user, IonComplete ionComplete){
-        executorService.execute(() -> {
-            try {
-                reference.child(user.getUsername()).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        ionComplete.onCompleteBool(task.isSuccessful());
-                    }
-                });
-            } catch (Exception e) {
-                utilityClass.showAlertExp();
-                ionComplete.onCompleteBool(false);
+
+    // Method to stop the current task
+    private void stopCurrentTask() {
+        if (currentTask != null) {
+            executorService.shutdownNow();
+            utilityClass.showAlertInternet(); // Changed from showAlertExp to showAlertInternet
+            if (myContext instanceof BaseActivity){
+                ((BaseActivity) myContext).hideLoadingOverlay();
             }
-        });
+        }
     }
-    public void update(User user,IonComplete ionComplete){
-        executorService.execute(() -> {
+
+    public void addUser(User user, IonComplete ionComplete) {
+        if (!isConnected.get()) {
+            utilityClass.showAlertInternet(); // Changed from showAlertExp to showAlertInternet
+            ionComplete.onCompleteBool(false);
+            return;
+        }
+        currentTask = executorService.submit(() -> {
             try {
-                Map<String, Object> updates = new HashMap<>();
-                updates.put("username", user.getUsername());
-                updates.put("pass", user.getPass());
-                reference.child(user.getUsername()).updateChildren(updates).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        ionComplete.onCompleteBool(task.isSuccessful());
+                reference.child(user.getUsername()).setValue(user).addOnCompleteListener(task -> {
+                    if (!isConnected.get()) {
+                        utilityClass.showAlertInternet(); // Changed from showAlertExp to showAlertInternet
+                        ionComplete.onCompleteBool(false);
+                        return;
                     }
+                    ionComplete.onCompleteBool(task.isSuccessful());
                 });
             } catch (Exception e) {
                 utilityClass.showAlertExp();
@@ -84,18 +102,79 @@ public class MyFireBaseHelper {
         });
     }
 
-    public interface checkUser
-    {
+    public void update(User user, IonComplete ionComplete) {
+        if (!isConnected.get()) {
+            utilityClass.showAlertInternet(); // Changed from showAlertExp to showAlertInternet
+            ionComplete.onCompleteBool(false);
+            return;
+        }
+        currentTask = executorService.submit(() -> {
+            try {
+                Map<String, Object> updates = new HashMap<>();
+                updates.put("username", user.getUsername());
+                updates.put("pass", user.getPass());
+                reference.child(user.getUsername()).updateChildren(updates).addOnCompleteListener(task -> {
+                    if (!isConnected.get()) {
+                        utilityClass.showAlertInternet(); // Changed from showAlertExp to showAlertInternet
+                        ionComplete.onCompleteBool(false);
+                        return;
+                    }
+                    ionComplete.onCompleteBool(task.isSuccessful());
+                });
+            } catch (Exception e) {
+                utilityClass.showAlertExp();
+                ionComplete.onCompleteBool(false);
+            }
+        });
+    }
+
+    public interface checkUser {
         void onCheckedUser(boolean flag);
     }
-    public void userNameExsIts(String username , checkUser checkUser){
-        executorService.execute(() -> {
+
+    public void userNameExsIts(String username, checkUser checkUser) {
+        if (!isConnected.get()) {
+            utilityClass.showAlertInternet(); // Changed from showAlertExp to showAlertInternet
+            checkUser.onCheckedUser(false);
+            return;
+        }
+        currentTask = executorService.submit(() -> {
             try {
-                reference.child(username).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DataSnapshot> task) {
-                        DataSnapshot dataSnapshot = task.getResult();
-                        checkUser.onCheckedUser(task.isSuccessful() && String.valueOf(dataSnapshot.child("username").getValue()).equals(username));
+                reference.child(username).get().addOnCompleteListener(task -> {
+                    if (!isConnected.get()) {
+                        utilityClass.showAlertInternet(); // Changed from showAlertExp to showAlertInternet
+                        checkUser.onCheckedUser(false);
+                        return;
+                    }
+                    DataSnapshot dataSnapshot = task.getResult();
+                    checkUser.onCheckedUser(task.isSuccessful() && String.valueOf(dataSnapshot.child("username").getValue()).equals(username));
+                });
+            } catch (Exception e) {
+                utilityClass.showAlertExp();
+                checkUser.onCheckedUser(false);
+            }
+        });
+    }
+
+    public void userExsits(User user, checkUser checkUser) {
+        if (!isConnected.get()) {
+            utilityClass.showAlertInternet(); // Changed from showAlertExp to showAlertInternet
+            checkUser.onCheckedUser(false);
+            return;
+        }
+        currentTask = executorService.submit(() -> {
+            try {
+                reference.child(user.getUsername()).get().addOnCompleteListener(task -> {
+                    if (!isConnected.get()) {
+                        utilityClass.showAlertInternet(); // Changed from showAlertExp to showAlertInternet
+                        checkUser.onCheckedUser(false);
+                        return;
+                    }
+                    DataSnapshot dataSnapshot = task.getResult();
+                    if (task.isSuccessful() && String.valueOf(dataSnapshot.child("username").getValue()).equals(user.getUsername())) {
+                        checkUser.onCheckedUser(String.valueOf(dataSnapshot.child("pass").getValue()).equals(user.getPass()));
+                    } else {
+                        checkUser.onCheckedUser(false);
                     }
                 });
             } catch (Exception e) {
@@ -104,44 +183,32 @@ public class MyFireBaseHelper {
             }
         });
     }
-    public void userExsits(User user,checkUser checkUser){
-        executorService.execute(() -> {
-            try {
-                reference.child(user.getUsername()).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DataSnapshot> task) {
-                        DataSnapshot dataSnapshot = task.getResult();
-                        if (task.isSuccessful() && String.valueOf(dataSnapshot.child("username").getValue()).equals(user.getUsername())) {
-                            checkUser.onCheckedUser(String.valueOf(dataSnapshot.child("pass").getValue()).equals(user.getPass()));
-                        } else {
-                            checkUser.onCheckedUser(false);
-                        }
-                    }
-                });
-            } catch (Exception e) {
-                utilityClass.showAlertExp();
-                checkUser.onCheckedUser(false);
-            }
-        });
-    }
+
     public void getUserByName(String username, IonComplete.IonCompleteUser user) {
-        executorService.execute(() -> {
+        if (!isConnected.get()) {
+            utilityClass.showAlertInternet(); // Changed from showAlertExp to showAlertInternet
+            user.onCompleteUser(null);
+            return;
+        }
+        currentTask = executorService.submit(() -> {
             try {
-                reference.child(username).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DataSnapshot> task) {
-                        if (task.isSuccessful() && task.getResult() != null) {
-                            DataSnapshot dataSnapshot = task.getResult();
-                            String retrievedUsername = String.valueOf(dataSnapshot.child("username").getValue());
-                            if (username.equals(retrievedUsername)) {
-                                String pass = String.valueOf(dataSnapshot.child("pass").getValue());
-                                user.onCompleteUser(new User(retrievedUsername, pass));
-                            } else {
-                                user.onCompleteUser(null);
-                            }
+                reference.child(username).get().addOnCompleteListener(task -> {
+                    if (!isConnected.get()) {
+                        utilityClass.showAlertInternet(); // Changed from showAlertExp to showAlertInternet
+                        user.onCompleteUser(null);
+                        return;
+                    }
+                    if (task.isSuccessful() && task.getResult() != null) {
+                        DataSnapshot dataSnapshot = task.getResult();
+                        String retrievedUsername = String.valueOf(dataSnapshot.child("username").getValue());
+                        if (username.equals(retrievedUsername)) {
+                            String pass = String.valueOf(dataSnapshot.child("pass").getValue());
+                            user.onCompleteUser(new User(retrievedUsername, pass));
                         } else {
                             user.onCompleteUser(null);
                         }
+                    } else {
+                        user.onCompleteUser(null);
                     }
                 });
             } catch (Exception e) {
@@ -149,6 +216,12 @@ public class MyFireBaseHelper {
                 user.onCompleteUser(null);
             }
         });
+    }
+
+    // Method to destroy the MyFireBaseHelper instance
+    public void destroy() {
+        connectivityListener.stopObserving();
+        executorService.shutdown();
     }
 
 

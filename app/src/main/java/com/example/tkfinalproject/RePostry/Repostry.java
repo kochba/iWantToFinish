@@ -2,6 +2,8 @@ package com.example.tkfinalproject.RePostry;
 
 import android.content.Context;
 
+import androidx.lifecycle.LifecycleOwner;
+
 import com.example.tkfinalproject.Utility.IonComplete;
 
 public class Repostry {
@@ -12,7 +14,7 @@ public class Repostry {
     public Repostry(Context context)
     {
         myDatabaseHelper = new MyDataBaseHelper(context);
-        fireBaseHelper = new MyFireBaseHelper(context);
+        fireBaseHelper = new MyFireBaseHelper(context, (LifecycleOwner) context);
         Mycontext = context;
         //database = FirebaseDatabase.getInstance();
         //reference = database.getReference("Users");
