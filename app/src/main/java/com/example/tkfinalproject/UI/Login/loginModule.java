@@ -2,6 +2,7 @@ package com.example.tkfinalproject.UI.Login;
 
 import android.content.Context;
 
+import com.example.tkfinalproject.DB.MyFireBaseHelper;
 import com.example.tkfinalproject.RePostry.Repostry;
 import com.example.tkfinalproject.RePostry.User;
 
@@ -11,7 +12,7 @@ public class loginModule {
         repostry = new Repostry(context);
     }
 
-    public void UserExsist(User user, com.example.tkfinalproject.RePostry.MyFireBaseHelper.checkUser checkUser){
+    public void UserExsist(User user, MyFireBaseHelper.checkUser checkUser){
         repostry.IsExisit(user.getUsername(),user.getPass(),checkUser);
     }
     public void setUser(User user){

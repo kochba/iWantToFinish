@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.tkfinalproject.DB.MyFireBaseHelper;
 import com.example.tkfinalproject.R;
 import com.example.tkfinalproject.RePostry.User;
 import com.example.tkfinalproject.UI.FirstPage.FirstPage;
@@ -40,7 +41,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
         if (isConnected){
             super.showLoadingOverlay();
-            mainActivityModule.StartLogin(user, new com.example.tkfinalproject.RePostry.MyFireBaseHelper.checkUser() {
+            mainActivityModule.StartLogin(user, new MyFireBaseHelper.checkUser() {
                 @Override
                 public void onCheckedUser(boolean flag) {
                     if (flag){

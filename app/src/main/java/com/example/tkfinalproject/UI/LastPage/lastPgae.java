@@ -1,5 +1,6 @@
 package com.example.tkfinalproject.UI.LastPage;
 
+import android.annotation.SuppressLint;
 import android.app.AlarmManager;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -73,7 +74,8 @@ public class lastPgae extends BaseActivity implements View.OnClickListener {
         }
         //CommunicationHelper(cardForm.getMobileNumber(),new InfoMeassge(phone,"אשראי",getActivity()));
     }
-    public void setAlarm(View view,InfoMeassge infoMeassge) {
+    @SuppressLint("ScheduleExactAlarm")
+    public void setAlarm(View view, InfoMeassge infoMeassge) {
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this, AlarmReceiver.class);
         String messageBody = "תודה " + infoMeassge.getName() + " שביצעת טרייד–אין עם RePepHole\n" +

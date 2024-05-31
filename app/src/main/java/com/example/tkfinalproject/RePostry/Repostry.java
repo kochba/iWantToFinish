@@ -4,6 +4,8 @@ import android.content.Context;
 
 import androidx.lifecycle.LifecycleOwner;
 
+import com.example.tkfinalproject.DB.MyDataBaseHelper;
+import com.example.tkfinalproject.DB.MyFireBaseHelper;
 import com.example.tkfinalproject.Utility.IonComplete;
 
 public class Repostry {
@@ -164,11 +166,11 @@ public class Repostry {
             }
         //}
     }
-    public void doesUserNameExisit(String userName , com.example.tkfinalproject.RePostry.MyFireBaseHelper.checkUser checkUser){
+    public void doesUserNameExisit(String userName , MyFireBaseHelper.checkUser checkUser){
         fireBaseHelper.userNameExsIts(userName, checkUser);
     }
 
-    public void IsExisit(String name, String pass, com.example.tkfinalproject.RePostry.MyFireBaseHelper.checkUser checkUser){
+    public void IsExisit(String name, String pass, MyFireBaseHelper.checkUser checkUser){
 //        Boolean X = fireBaseHelper.checkUserExistence(new User(name,pass));
 //        Boolean Y = myDatabaseHelper.IsExist(name,pass);
         fireBaseHelper.userExsits(new User(name,pass),checkUser);

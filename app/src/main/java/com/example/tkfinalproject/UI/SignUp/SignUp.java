@@ -1,7 +1,6 @@
 package com.example.tkfinalproject.UI.SignUp;
 
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -16,22 +15,14 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
-import android.widget.Toast;
 
 
 import com.example.tkfinalproject.R;
-import com.example.tkfinalproject.RePostry.MyDataBaseHelper;
 import com.example.tkfinalproject.RePostry.User;
-import com.example.tkfinalproject.UI.FirstPage.FirstPage;
 import com.example.tkfinalproject.UI.Login.login;
-import com.example.tkfinalproject.UI.mainactivity.MainActivity;
 import com.example.tkfinalproject.Utility.BaseActivity;
 import com.example.tkfinalproject.Utility.IonComplete;
-import com.example.tkfinalproject.Utility.LocaleHelper;
 import com.example.tkfinalproject.Utility.UtilityClass;
-
-import java.util.jar.Attributes;
 
 public class SignUp extends BaseActivity implements View.OnClickListener {
 

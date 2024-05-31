@@ -16,8 +16,8 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.tkfinalproject.DB.MyFireBaseHelper;
 import com.example.tkfinalproject.R;
 import com.example.tkfinalproject.RePostry.User;
 import com.example.tkfinalproject.UI.FirstPage.FirstPage;
@@ -93,7 +93,7 @@ public class login extends BaseActivity implements View.OnClickListener {
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         SharedPreferences.Editor editor = sp.edit();
         if (isConnected){
-                Module.UserExsist(user, new com.example.tkfinalproject.RePostry.MyFireBaseHelper.checkUser() {
+                Module.UserExsist(user, new MyFireBaseHelper.checkUser() {
                     @Override
                     public void onCheckedUser(boolean flag) {
                         if(flag)
