@@ -3,10 +3,14 @@ package com.example.tkfinalproject.Utility;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
 import androidx.appcompat.app.AlertDialog;
+
+import com.example.tkfinalproject.UI.FirstPage.FirstPage;
+import com.example.tkfinalproject.UI.UpdateUser.UpdateUser;
 
 public class UtilityClass {
     Context Mycontext;
@@ -42,11 +46,15 @@ public class UtilityClass {
         adb.setPositiveButton("הבנתי", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
+                if (Mycontext instanceof UpdateUser){
+                    Intent intent = new Intent(Mycontext, FirstPage.class);
+                    Mycontext.startActivity(intent);
+                }
             }
         });
         adb.create().show();
     }
+
     public void showAlertEmail() {
         adb.setTitle("יש בעיה חבר");
         adb.setMessage("מלא כתובת דואר אלקטוני תקינה");

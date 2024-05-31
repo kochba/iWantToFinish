@@ -10,6 +10,7 @@ import com.example.tkfinalproject.Utility.BaseActivity;
 import com.example.tkfinalproject.Utility.ConnectivityListener;
 import com.example.tkfinalproject.Utility.IonComplete;
 import com.example.tkfinalproject.Utility.UtilityClass;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -24,6 +25,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class MyFireBaseHelper {
     FirebaseDatabase database;
     DatabaseReference reference;
+    Boolean dontStooped;
     Context myContext;
     UtilityClass utilityClass;
     ExecutorService executorService;
@@ -34,6 +36,7 @@ public class MyFireBaseHelper {
     public MyFireBaseHelper(Context context, LifecycleOwner lifecycleOwner) {
         utilityClass = new UtilityClass(context);
         try {
+            dontStooped = true;
             executorService = Executors.newSingleThreadExecutor();
             connectivityListener = new ConnectivityListener(context);
             database = FirebaseDatabase.getInstance();
@@ -58,6 +61,7 @@ public class MyFireBaseHelper {
     // Method to stop the current task
     private void stopCurrentTask() {
         if (currentTask != null) {
+            dontStooped = false;
             executorService.shutdownNow();
             utilityClass.showAlertInternet(); // Changed from showAlertExp to showAlertInternet
             if (myContext instanceof BaseActivity){
@@ -67,20 +71,20 @@ public class MyFireBaseHelper {
     }
 
     public void addUser(User user, IonComplete ionComplete) {
-        if (!isConnected.get()) {
-            utilityClass.showAlertInternet(); // Changed from showAlertExp to showAlertInternet
-            ionComplete.onCompleteBool(false);
-            return;
-        }
         currentTask = executorService.submit(() -> {
             try {
                 reference.child(user.getUsername()).setValue(user).addOnCompleteListener(task -> {
                     if (!isConnected.get()) {
-                        utilityClass.showAlertInternet(); // Changed from showAlertExp to showAlertInternet
                         ionComplete.onCompleteBool(false);
+                        //remove user
                         return;
                     }
-                    ionComplete.onCompleteBool(task.isSuccessful());
+                    if (dontStooped){
+                        ionComplete.onCompleteBool(task.isSuccessful());
+                    }
+                    else {
+                        dontStooped = true;
+                    }
                 });
             } catch (Exception e) {
                 utilityClass.showAlertExp();
@@ -90,11 +94,11 @@ public class MyFireBaseHelper {
     }
 
     public void update(User user, IonComplete ionComplete) {
-        if (!isConnected.get()) {
-            utilityClass.showAlertInternet(); // Changed from showAlertExp to showAlertInternet
-            ionComplete.onCompleteBool(false);
-            return;
-        }
+//        if (!isConnected.get()) {
+//            utilityClass.showAlertInternet(); // Changed from showAlertExp to showAlertInternet
+//            ionComplete.onCompleteBool(false);
+//            return;
+//        }
         currentTask = executorService.submit(() -> {
             try {
                 Map<String, Object> updates = new HashMap<>();
@@ -106,7 +110,12 @@ public class MyFireBaseHelper {
                         ionComplete.onCompleteBool(false);
                         return;
                     }
-                    ionComplete.onCompleteBool(task.isSuccessful());
+                    if (dontStooped){
+                        ionComplete.onCompleteBool(task.isSuccessful());
+                    }
+                    else {
+                        dontStooped = true;
+                    }
                 });
             } catch (Exception e) {
                 utilityClass.showAlertExp();
@@ -120,11 +129,11 @@ public class MyFireBaseHelper {
     }
 
     public void userNameExsIts(String username, checkUser checkUser) {
-        if (!isConnected.get()) {
-            utilityClass.showAlertInternet(); // Changed from showAlertExp to showAlertInternet
-            checkUser.onCheckedUser(false);
-            return;
-        }
+//        if (!isConnected.get()) {
+//            utilityClass.showAlertInternet(); // Changed from showAlertExp to showAlertInternet
+//            checkUser.onCheckedUser(false);
+//            return;
+//        }
         currentTask = executorService.submit(() -> {
             try {
                 reference.child(username).get().addOnCompleteListener(task -> {
@@ -133,8 +142,13 @@ public class MyFireBaseHelper {
                         checkUser.onCheckedUser(false);
                         return;
                     }
-                    DataSnapshot dataSnapshot = task.getResult();
-                    checkUser.onCheckedUser(task.isSuccessful() && String.valueOf(dataSnapshot.child("username").getValue()).equals(username));
+                    if (dontStooped){
+                        DataSnapshot dataSnapshot = task.getResult();
+                        checkUser.onCheckedUser(task.isSuccessful() && String.valueOf(dataSnapshot.child("username").getValue()).equals(username));
+                    }
+                    else {
+                        dontStooped = true;
+                    }
                 });
             } catch (Exception e) {
                 utilityClass.showAlertExp();
@@ -144,11 +158,11 @@ public class MyFireBaseHelper {
     }
 
     public void userExsits(User user, checkUser checkUser) {
-        if (!isConnected.get()) {
-            utilityClass.showAlertInternet(); // Changed from showAlertExp to showAlertInternet
-            checkUser.onCheckedUser(false);
-            return;
-        }
+//        if (!isConnected.get()) {
+//            utilityClass.showAlertInternet(); // Changed from showAlertExp to showAlertInternet
+//            checkUser.onCheckedUser(false);
+//            return;
+//        }
         currentTask = executorService.submit(() -> {
             try {
                 reference.child(user.getUsername()).get().addOnCompleteListener(task -> {
@@ -157,11 +171,16 @@ public class MyFireBaseHelper {
                         checkUser.onCheckedUser(false);
                         return;
                     }
-                    DataSnapshot dataSnapshot = task.getResult();
-                    if (task.isSuccessful() && String.valueOf(dataSnapshot.child("username").getValue()).equals(user.getUsername())) {
-                        checkUser.onCheckedUser(String.valueOf(dataSnapshot.child("pass").getValue()).equals(user.getPass()));
-                    } else {
-                        checkUser.onCheckedUser(false);
+                    if (dontStooped){
+                        DataSnapshot dataSnapshot = task.getResult();
+                        if (task.isSuccessful() && String.valueOf(dataSnapshot.child("username").getValue()).equals(user.getUsername())) {
+                            checkUser.onCheckedUser(String.valueOf(dataSnapshot.child("pass").getValue()).equals(user.getPass()));
+                        } else {
+                            checkUser.onCheckedUser(false);
+                        }
+                    }
+                    else {
+                        dontStooped = true;
                     }
                 });
             } catch (Exception e) {
@@ -172,11 +191,11 @@ public class MyFireBaseHelper {
     }
 
     public void getUserByName(String username, IonComplete.IonCompleteUser user) {
-        if (!isConnected.get()) {
-            utilityClass.showAlertInternet(); // Changed from showAlertExp to showAlertInternet
-            user.onCompleteUser(null);
-            return;
-        }
+//        if (!isConnected.get()) {
+//            utilityClass.showAlertInternet(); // Changed from showAlertExp to showAlertInternet
+//            user.onCompleteUser(null);
+//            return;
+//        }
         currentTask = executorService.submit(() -> {
             try {
                 reference.child(username).get().addOnCompleteListener(task -> {
@@ -185,17 +204,22 @@ public class MyFireBaseHelper {
                         user.onCompleteUser(null);
                         return;
                     }
-                    if (task.isSuccessful() && task.getResult() != null) {
-                        DataSnapshot dataSnapshot = task.getResult();
-                        String retrievedUsername = String.valueOf(dataSnapshot.child("username").getValue());
-                        if (username.equals(retrievedUsername)) {
-                            String pass = String.valueOf(dataSnapshot.child("pass").getValue());
-                            user.onCompleteUser(new User(retrievedUsername, pass));
+                    if (dontStooped){
+                        if (task.isSuccessful() && task.getResult() != null) {
+                            DataSnapshot dataSnapshot = task.getResult();
+                            String retrievedUsername = String.valueOf(dataSnapshot.child("username").getValue());
+                            if (username.equals(retrievedUsername)) {
+                                String pass = String.valueOf(dataSnapshot.child("pass").getValue());
+                                user.onCompleteUser(new User(retrievedUsername, pass));
+                            } else {
+                                user.onCompleteUser(null);
+                            }
                         } else {
                             user.onCompleteUser(null);
                         }
-                    } else {
-                        user.onCompleteUser(null);
+                    }
+                    else {
+                        dontStooped = true;
                     }
                 });
             } catch (Exception e) {
