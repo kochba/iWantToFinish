@@ -13,15 +13,31 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * CsvReader is a class that reads data from a CSV file and provides various methods
+ * to retrieve distinct brands, models by brand, capacities by brand and model,
+ * and prices based on the brand, model, and capacity.
+ */
 public class CsvReader {
     Context mycontext;
     UtilityClass utilityClass;
 
+    /**
+     * Constructs a new CsvReader with the specified context.
+     *
+     * @param mycontext the context to use for accessing assets.
+     */
     public CsvReader(Context mycontext) {
         this.mycontext = mycontext;
         utilityClass = new UtilityClass(mycontext);
     }
 
+    /**
+     * Retrieves a list of distinct brands from the CSV file.
+     *
+     * @param context the context to use for accessing assets.
+     * @return a list of distinct brands.
+     */
     public List<String> getDistinctBrands(Context context) {
         Set<String> brandsSet = new HashSet<>();
 
@@ -44,19 +60,21 @@ public class CsvReader {
             }
 
             reader.close();
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             utilityClass.showAlertExp();
-//            e.printStackTrace();
-//            Log.e("CSVDataReader", "Error reading CSV file: " + e.getMessage());
         }
 
         return new ArrayList<>(brandsSet);
     }
 
+    /**
+     * Retrieves a list of models for the specified brand from the CSV file.
+     *
+     * @param context the context to use for accessing assets.
+     * @param selectedBrand the brand for which to retrieve models.
+     * @return a list of models for the specified brand.
+     */
     public List<String> getModelsByBrand(Context context, String selectedBrand) {
-//        Set<String> modelsList = new HashSet<>();
-//        TreeSet<String> modelsList = new TreeSet<>();
         LinkedHashSet<String> modelsList = new LinkedHashSet<>();
 
         AssetManager assetManager = context.getAssets();
@@ -82,15 +100,21 @@ public class CsvReader {
             }
 
             reader.close();
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             utilityClass.showAlertExp();
-//            e.printStackTrace();
-//            Log.e("CSVDataReader", "Error reading CSV file: " + e.getMessage());
         }
 
         return new ArrayList<>(modelsList);
     }
+
+    /**
+     * Retrieves a list of capacities for the specified brand and model from the CSV file.
+     *
+     * @param context the context to use for accessing assets.
+     * @param selectedBrand the brand for which to retrieve capacities.
+     * @param selectedModel the model for which to retrieve capacities.
+     * @return a list of capacities for the specified brand and model.
+     */
     public List<String> getCapcity(Context context, String selectedBrand, String selectedModel) {
         List<String> capcitylist = new ArrayList<>();
 
@@ -118,17 +142,23 @@ public class CsvReader {
             }
 
             reader.close();
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             utilityClass.showAlertExp();
-//            e.printStackTrace();
-//            Log.e("CSVDataReader", "Error reading CSV file: " + e.getMessage());
         }
 
         return capcitylist;
     }
-    public String getprice1(Context context, String selectedBrand, String selectedModel,String selectCapcity) {
 
+    /**
+     * Retrieves the price for the specified brand, model, and capacity from the CSV file.
+     *
+     * @param context the context to use for accessing assets.
+     * @param selectedBrand the brand for which to retrieve the price.
+     * @param selectedModel the model for which to retrieve the price.
+     * @param selectCapcity the capacity for which to retrieve the price.
+     * @return the price for the specified brand, model, and capacity, or null if not found.
+     */
+    public String getprice1(Context context, String selectedBrand, String selectedModel, String selectCapcity) {
         AssetManager assetManager = context.getAssets();
         try {
             InputStream inputStream = assetManager.open("tradeinprice.csv");
@@ -147,7 +177,6 @@ public class CsvReader {
                     String capicty = nextLine[2].trim();
                     String price1 = nextLine[3].trim();
 
-
                     if (brand.equalsIgnoreCase(selectedBrand) && model.equalsIgnoreCase(selectedModel) && capicty.equalsIgnoreCase(selectCapcity)) {
                         reader.close();
                         return price1;
@@ -156,17 +185,24 @@ public class CsvReader {
             }
 
             reader.close();
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             utilityClass.showAlertExp();
-//            e.printStackTrace();
-//            Log.e("CSVDataReader", "Error reading CSV file: " + e.getMessage());
         }
 
         return null;
     }
-    public String getpriceByCode(Context context, String selectedBrand, String selectedModel,String selectCapcity,int code) {
 
+    /**
+     * Retrieves the price by code for the specified brand, model, and capacity from the CSV file.
+     *
+     * @param context the context to use for accessing assets.
+     * @param selectedBrand the brand for which to retrieve the price.
+     * @param selectedModel the model for which to retrieve the price.
+     * @param selectCapcity the capacity for which to retrieve the price.
+     * @param code the code for the specific price to retrieve (1-4).
+     * @return the price for the specified brand, model, and capacity based on the code, or null if not found.
+     */
+    public String getpriceByCode(Context context, String selectedBrand, String selectedModel, String selectCapcity, int code) {
         AssetManager assetManager = context.getAssets();
         try {
             InputStream inputStream = assetManager.open("tradeinprice.csv");
@@ -189,20 +225,16 @@ public class CsvReader {
                     prices[2] = nextLine[5].trim();
                     prices[3] = nextLine[6].trim();
 
-
                     if (brand.equalsIgnoreCase(selectedBrand) && model.equalsIgnoreCase(selectedModel) && capicty.equalsIgnoreCase(selectCapcity)) {
                         reader.close();
-                        return prices[code-1];
+                        return prices[code - 1];
                     }
                 }
             }
 
             reader.close();
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             utilityClass.showAlertExp();
-//            e.printStackTrace();
-//            Log.e("CSVDataReader", "Error reading CSV file: " + e.getMessage());
         }
 
         return null;

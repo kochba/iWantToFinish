@@ -1,9 +1,6 @@
 package com.example.tkfinalproject.UI.SignUp;
 
-import androidx.appcompat.app.AlertDialog;
-
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
@@ -16,32 +13,49 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import androidx.appcompat.app.AlertDialog;
 
 import com.example.tkfinalproject.R;
 import com.example.tkfinalproject.RePostry.User;
 import com.example.tkfinalproject.UI.Login.login;
 import com.example.tkfinalproject.Utility.BaseActivity;
-import com.example.tkfinalproject.Utility.IonComplete;
 import com.example.tkfinalproject.Utility.UtilityClass;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+/**
+ * The SignUp class handles user sign-up functionality.
+ */
 public class SignUp extends BaseActivity implements View.OnClickListener {
 
-    private EditText name , pass ,eqpass;
+    /** EditText fields for username, password, and password confirmation */
+    private EditText name, pass, eqpass;
+
+    /** Button for submitting the sign-up information */
     private Button btn;
+
+    /** SharedPreferences for storing user preferences */
     SharedPreferences sp;
-    String Un,Up;
+
+    /** Flag for password visibility */
     Boolean PV = true;
+
+    /** Flag for password confirmation visibility */
     Boolean Pveq = true;
+
+    /** Module for handling sign-up operations */
     SignUpModule signUpModule;
 
+    /** Utility class for common utility methods */
     UtilityClass utilityClass;
-    int x;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
-        //LocaleHelper.setLocale(this, "iw");
+
+        // Initialize sign-up module and UI components
         signUpModule = new SignUpModule(this);
         btn = findViewById(R.id.Submit);
         name = findViewById(R.id.name);
@@ -49,7 +63,7 @@ public class SignUp extends BaseActivity implements View.OnClickListener {
         eqpass = findViewById(R.id.passowrdeq);
         btn.setOnClickListener(this);
         utilityClass = new UtilityClass(this);
-        sp = getSharedPreferences("MyUserPerfs" , Context.MODE_PRIVATE);
+        sp = getSharedPreferences("MyUserPerfs", Context.MODE_PRIVATE);
         pass.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -104,134 +118,128 @@ public class SignUp extends BaseActivity implements View.OnClickListener {
                 return false;
             }
         });
-
     }
+
     @Override
     protected int getRootLayoutId() {
         return R.id.signuplayout;
     }
+
     @Override
     public void onClick(View v) {
+        // Disable button and show loading overlay during sign-up process
         btn.setEnabled(false);
         super.showLoadingOverlay();
-        if (name.getText().length() < 8){
-            //aletr קצר משמונה
+
+        // Perform input validation
+        if (name.getText().length() < 8) {
+            // Show alert dialog for username length validation
             AlertDialog.Builder adb = new AlertDialog.Builder(this);
             adb.setTitle("יש בעיה חבר!");
             adb.setMessage("שם משתמש קצר משמונה");
             adb.setCancelable(false);
-            adb.setPositiveButton("הבנתי", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-
-                }
-            });
+            adb.setPositiveButton("הבנתי", (dialog, which) -> {});
             adb.create().show();
             btn.setEnabled(true);
             super.hideLoadingOverlay();
-        }
-        else if (pass.getText().length() < 6){
+        } else if (!containsLetter(name.getText().toString())) {
+            // Show alert dialog for username containing letters validation
+            AlertDialog.Builder adb = new AlertDialog.Builder(this);
+            adb.setTitle("יש בעיה חבר!");
+            adb.setMessage("בשם משתמש חייב להכיל לפחות אות אחת");
+            adb.setCancelable(false);
+            adb.setPositiveButton("הבנתי", (dialog, which) -> {});
+            adb.create().show();
+            btn.setEnabled(true);
+            super.hideLoadingOverlay();
+        } else if (pass.getText().length() < 6) {
+            // Show alert dialog for password length validation
             AlertDialog.Builder adb = new AlertDialog.Builder(this);
             adb.setTitle("יש בעיה חבר!");
             adb.setMessage("סיסמה קצרה מ6");
             adb.setCancelable(false);
-            adb.setPositiveButton("הבנתי", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-
-                }
-            });
+            adb.setPositiveButton("הבנתי", (dialog, which) -> {});
             adb.create().show();
             btn.setEnabled(true);
             super.hideLoadingOverlay();
-        }
-        else if (!pass.getText().toString().equals(eqpass.getText().toString())) {
+        } else if (!pass.getText().toString().equals(eqpass.getText().toString())) {
+            // Show alert dialog for password and confirmation mismatch validation
             AlertDialog.Builder adb = new AlertDialog.Builder(this);
             adb.setTitle("יש בעיה חבר!");
             adb.setMessage("האימות והסיסמה לא זהים");
             adb.setCancelable(false);
-            adb.setPositiveButton("הבנתי", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-
-                }
-            });
+            adb.setPositiveButton("הבנתי", (dialog, which) -> {});
             adb.create().show();
             btn.setEnabled(true);
             super.hideLoadingOverlay();
-        }
-        else {
-            ConnectivityManager cm = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        } else {
+            // Check internet connectivity
+            ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
             boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
             AlertDialog.Builder adb = new AlertDialog.Builder(this);
             Intent intent = new Intent(this, login.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            if (isConnected){
-                User user = new User(name.getText().toString().trim(),pass.getText().toString().trim());
-                signUpModule.NewSignUp(user, new IonComplete.IonCompleteInt() {
-                    @Override
-                    public void onCompleteInt(int flag) {
-                        switch (flag){
-                            case 0:
-                                adb.setTitle("הרשמה הצליחה!");
-                                adb.setMessage("אתה יכול להיכנס לאפליקצייה");
-                                adb.setCancelable(false);
-                                adb.setPositiveButton("הבנתי", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        startActivity(intent);
-                                    }
-                                });
-                                adb.create().show();
-                                break;
-                            case 1:
-                                adb.setTitle("הרשמה נכשלה!");
-                                adb.setMessage("נסה שוב");
-                                adb.setCancelable(false);
-                                adb.setPositiveButton("הבנתי", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
 
-                                    }
-                                });
-                                adb.create().show();
-                                btn.setEnabled(true);
-                                SignUp.super.hideLoadingOverlay();
-                                break;
-                            case 2:
-                                adb.setTitle("יש בעיה חבר!");
-                                adb.setMessage("השם משתמש כבר קיים במערכת");
-                                adb.setCancelable(false);
-                                adb.setPositiveButton("הבנתי", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-
-                                    }
-                                });
-                                adb.create().show();
-                                btn.setEnabled(true);
-                                SignUp.super.hideLoadingOverlay();
-                                break;
-                        }
-
+            if (isConnected) {
+                // Perform sign-up operation if internet is available
+                User user = new User(name.getText().toString().trim(), pass.getText().toString().trim());
+                signUpModule.NewSignUp(user, flag -> {
+                    switch (flag) {
+                        case 0:
+                            // Show success dialog and navigate to login screen
+                            adb.setTitle("הרשמה הצליחה!");
+                            adb.setMessage("אתה יכול להיכנס לאפליקצייה");
+                            adb.setCancelable(false);
+                            adb.setPositiveButton("הבנתי", (dialog, which) -> startActivity(intent));
+                            adb.create().show();
+                            break;
+                        case 1:
+                            // Show error dialog for failed sign-up attempt
+                            adb.setTitle("הרשמה נכשלה!");
+                            adb.setMessage("נסה שוב");
+                            adb.setCancelable(false);
+                            adb.setPositiveButton("הבנתי", (dialog, which) -> {});
+                            adb.create().show();
+                            btn.setEnabled(true);
+                            SignUp.super.hideLoadingOverlay();
+                            break;
+                        case 2:
+                            // Show error dialog for existing username
+                            adb.setTitle("יש בעיה חבר!");
+                            adb.setMessage("השם משתמש כבר קיים במערכת");
+                            adb.setCancelable(false);
+                            adb.setPositiveButton("הבנתי", (dialog, which) -> {});
+                            adb.create().show();
+                            btn.setEnabled(true);
+                            SignUp.super.hideLoadingOverlay();
+                            break;
                     }
                 });
-            }
-            else {
+            } else {
+                // Show error dialog for no internet connection
                 adb.setTitle("יש בעיה חבר!");
-                adb.setMessage("אין אינטרנט חבר אי אפשר להירשם");
+                adb.setMessage("אין אינטרנט חבר, אי אפשר להירשם");
                 adb.setCancelable(false);
-                adb.setPositiveButton("הבנתי", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                });
+                adb.setPositiveButton("הבנתי", (dialog, which) -> {});
                 adb.create().show();
                 btn.setEnabled(true);
                 super.hideLoadingOverlay();
             }
         }
+    }
+
+
+    /**
+     * Method to check if a string contains at least one letter.
+     *
+     * @param input The string to check.
+     * @return True if the string contains at least one letter, false otherwise.
+     */
+    private boolean containsLetter(String input) {
+        String pattern = ".*[a-zA-Z].*";
+        Pattern compiledPattern = Pattern.compile(pattern);
+        Matcher matcher = compiledPattern.matcher(input);
+        return matcher.matches();
     }
 }

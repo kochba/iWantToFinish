@@ -8,187 +8,160 @@ import com.example.tkfinalproject.DB.MyDataBaseHelper;
 import com.example.tkfinalproject.DB.MyFireBaseHelper;
 import com.example.tkfinalproject.Utility.IonComplete;
 
+/**
+ * This class acts as a repository to manage user data operations such as adding, updating,
+ * and removing users. It interacts with both a local database and Firebase to perform these operations.
+ */
 public class Repostry {
-    MyDataBaseHelper myDatabaseHelper;
-    MyFireBaseHelper fireBaseHelper;
-    Context Mycontext;
+    private final MyDataBaseHelper myDatabaseHelper;
+    private final MyFireBaseHelper fireBaseHelper;
+    private final Context myContext;
     private static User currentUser;
-    public Repostry(Context context)
-    {
+
+    /**
+     * Constructor to initialize the Repostry with a context.
+     *
+     * @param context The context to use for various operations.
+     */
+    public Repostry(Context context) {
         myDatabaseHelper = new MyDataBaseHelper(context);
         fireBaseHelper = new MyFireBaseHelper(context, (LifecycleOwner) context);
-        Mycontext = context;
-        //database = FirebaseDatabase.getInstance();
-        //reference = database.getReference("Users");
+        myContext = context;
     }
-    public void setCurrentData(IonComplete ionComplete){
-        if (currentUser != null){
-            fireBaseHelper.getUserByName(currentUser.getUsername(), new IonComplete.IonCompleteUser() {
-                @Override
-                public void onCompleteUser(User user) {
-                    setCurrentUser(user);
-                    ionComplete.onCompleteBool(true);
-                }
+
+    /**
+     * Sets the current user data from Firebase and calls the provided callback upon completion.
+     *
+     * @param ionComplete The callback to be called upon completion.
+     */
+    public void setCurrentData(IonComplete ionComplete) {
+        if (currentUser != null) {
+            fireBaseHelper.getUserByName(currentUser.getUsername(), user -> {
+                setCurrentUser(user);
+                ionComplete.onCompleteBool(true);
             });
         }
     }
 
-//    public Repostry(Context context , User myuser)
-//    {
-//        myDatabaseHelper = new MyDataBaseHelper(context);
-//        Mycontext = context;
-//        currentUser = myuser;
-//    }
-
+    /**
+     * Gets the current user.
+     *
+     * @return The current user.
+     */
     public User getCurrentUser() {
         return currentUser;
     }
 
+    /**
+     * Sets the current user.
+     *
+     * @param currentUser The user to set as the current user.
+     */
     public void setCurrentUser(User currentUser) {
         Repostry.currentUser = currentUser;
     }
 
-    public void RNewSignUp(User user,IonComplete.IonCompleteInt ionCompleteInt)  {
-       // if (!myDatabaseHelper.DoesUserNameExisit(user.getUsername())){
-        doesUserNameExisit(user.getUsername(), new MyFireBaseHelper.checkUser() {
-            @Override
-            public void onCheckedUser(boolean flag) {
-                if (!flag){
-                    if (myDatabaseHelper.AddUser(user)) {
-                        fireBaseHelper.addUser(user, new IonComplete() {
-                            @Override
-                            public void onCompleteBool(boolean flag) {
-                                if (flag){
-                                    ionCompleteInt.onCompleteInt(0);
-                                }
-                                else {
-                                    myDatabaseHelper.removeUser(user);
-                                    ionCompleteInt.onCompleteInt(1);
-                                }
-                            }
-                        });
-                    }
-                    else {
-                        ionCompleteInt.onCompleteInt(1);
-                    }
+    /**
+     * Registers a new user and adds the user to both local database and Firebase.
+     * Calls the provided callback with the result of the operation.
+     *
+     * @param user The user to register.
+     * @param ionCompleteInt The callback to be called with the result of the operation.
+     */
+    public void RNewSignUp(User user, IonComplete.IonCompleteInt ionCompleteInt) {
+        doesUserNameExisit(user.getUsername(), flag -> {
+            if (!flag) {
+                if (myDatabaseHelper.AddUser(user)) {
+                    fireBaseHelper.addUser(user, flag1 -> {
+                        if (flag1) {
+                            ionCompleteInt.onCompleteInt(0);
+                        } else {
+                            myDatabaseHelper.removeUser(user);
+                            ionCompleteInt.onCompleteInt(1);
+                        }
+                    });
+                } else {
+                    ionCompleteInt.onCompleteInt(1);
                 }
-                else {
-                    ionCompleteInt.onCompleteInt(2);
-                }
+            } else {
+                ionCompleteInt.onCompleteInt(2);
             }
         });
     }
-//    public void Updateuser(User user , IonComplete.IonCompleteInt ionCompleteInt)  {
-//        if (!user.getUsername().equals(getCurrentUser().getUsername())){
-//            doesUserNameExisit(user.getUsername(), new MyFireBaseHelper.checkUser() {
-//                @Override
-//                public void onCheckedUser(boolean flag) {
-//                    if (!flag){
-//                        if (updatedata(user,1)) {
-//                            ionCompleteInt.onCompleteInt(0);
-//                        } else {
-//                            ionCompleteInt.onCompleteInt(1);
-//                        }
-//                    }
-//                    else {
-//                        ionCompleteInt.onCompleteInt(2);
-//                    }
-//                }
-//            });
-//        }
-//        else {
-//            updatedata(user,2,ionCompleteInt);
-////            if (updatedata(user,2,)) {
-////                ionCompleteInt.onCompleteInt(0);
-////            } else {
-////                ionCompleteInt.onCompleteInt(1);
-////            }
-//        }
-//    }
-//    public void Updateuser(User user , IonComplete.IonCompleteInt ionCompleteInt)  {
-//        if (!user.getUsername().equals(getCurrentUser().getUsername())){
-//            if (!doesUserNameExisit(user.getUsername())){
-//                if (updatedata(user,1)) {
-//                    return 0;
-//                } else {
-//                    return 1;
-//                }
-//            }
-//            else {
-//                return 2;
-//            }
-//        }
-//        else {
-//            if (updatedata(user,2)) {
-//                return 0;
-//            } else {
-//                return 1;
-//            }
-//        }
-//
-////        if (!myDatabaseHelper.DoesUserNameExisit(user.getUsername())){
-////            if (myDatabaseHelper.updateData(user)) {
-////                return 0;
-////            } else {
-////                return 1;
-////            }
-////        }
-////        else {
-////            return 2;
-////        }
-//    }
-    public void updatedata(User user, IonComplete.IonCompleteInt ionCompleteInt){
-//        if (code == 1){
-//            if (myDatabaseHelper.updateData(user,currentUser)){
-//                fireBaseHelper.update(user);
-//                return true;
-//            }
-//            else {
-//                return false;
-//            }
-//        }
-//        else {
-            if (myDatabaseHelper.uptadePass(user)) {
-                fireBaseHelper.update(user, new IonComplete() {
-                    @Override
-                    public void onCompleteBool(boolean flag) {
-                        if (flag){
-                            ionCompleteInt.onCompleteInt(0);
-                        }
-                        else {
-                            myDatabaseHelper.uptadePass(currentUser);
-                            ionCompleteInt.onCompleteInt(1);
-                        }
-                    }
-                });
-            } else {
-                ionCompleteInt.onCompleteInt(1);
-            }
-        //}
+
+    /**
+     * Updates the user data in both local database and Firebase. Calls the provided callback
+     * with the result of the operation.
+     *
+     * @param user The user data to update.
+     * @param ionCompleteInt The callback to be called with the result of the operation.
+     */
+    public void updatedata(User user, IonComplete.IonCompleteInt ionCompleteInt) {
+        if (myDatabaseHelper.uptadePass(user)) {
+            fireBaseHelper.update(currentUser, user, flag -> {
+                if (flag) {
+                    ionCompleteInt.onCompleteInt(0);
+                } else {
+                    myDatabaseHelper.uptadePass(currentUser);
+                    ionCompleteInt.onCompleteInt(1);
+                }
+            });
+        } else {
+            ionCompleteInt.onCompleteInt(1);
+        }
     }
-    public void doesUserNameExisit(String userName , MyFireBaseHelper.checkUser checkUser){
+
+    /**
+     * Checks if a username already exists in Firebase and calls the provided callback with the result.
+     *
+     * @param userName The username to check.
+     * @param checkUser The callback to be called with the result of the check.
+     */
+    public void doesUserNameExisit(String userName, MyFireBaseHelper.checkUser checkUser) {
         fireBaseHelper.userNameExsIts(userName, checkUser);
     }
 
-    public void IsExisit(String name, String pass, MyFireBaseHelper.checkUser checkUser){
-//        Boolean X = fireBaseHelper.checkUserExistence(new User(name,pass));
-//        Boolean Y = myDatabaseHelper.IsExist(name,pass);
-        fireBaseHelper.userExsits(new User(name,pass),checkUser);
-//        if (fireBaseHelper.checkUserExistence(new User(name,pass)),checkuser){
-//            setCurrentUser(new User(name,pass));
-//            return true;
-//        }
-//        else {
-//            return false;
-//        }
+    /**
+     * Checks if a user with the given username and password exists in Firebase and calls the provided callback with the result.
+     *
+     * @param name The username to check.
+     * @param pass The password to check.
+     * @param checkUser The callback to be called with the result of the check.
+     */
+    public void IsExisit(String name, String pass, MyFireBaseHelper.checkUser checkUser) {
+        fireBaseHelper.userExsits(new User(name, pass), checkUser);
     }
 
-    public boolean addDbUser(User user){
-        if (!myDatabaseHelper.DoesUserNameExisit(user.getUsername())){
-            return myDatabaseHelper.AddUser(user);
+    /**
+     * Adds a user to the local database if the username does not already exist.
+     *
+     * @param user The user to add.
+     */
+    public void addDbUser(User user) {
+        if (!myDatabaseHelper.DoesUserNameExisit(user.getUsername())) {
+            myDatabaseHelper.AddUser(user);
         }
-        else {
-            return true;
+    }
+
+    /**
+     * Removes a user from both local database and Firebase. Calls the provided callback
+     * with the result of the operation.
+     *
+     * @param user The user to remove.
+     * @param ionComplete The callback to be called with the result of the operation.
+     */
+    public void removeUser(User user, IonComplete ionComplete) {
+        if (myDatabaseHelper.removeUser(user)) {
+            fireBaseHelper.remove(user, flag -> {
+                if (flag) {
+                    ionComplete.onCompleteBool(true);
+                } else {
+                    myDatabaseHelper.AddUser(user);
+                    ionComplete.onCompleteBool(false);
+                }
+            });
+        } else {
+            ionComplete.onCompleteBool(false);
         }
     }
 }

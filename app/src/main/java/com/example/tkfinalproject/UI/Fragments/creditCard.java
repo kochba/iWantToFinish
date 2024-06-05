@@ -9,8 +9,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
-import androidx.fragment.app.Fragment;
-
 import com.braintreepayments.cardform.view.CardForm;
 import com.example.tkfinalproject.R;
 import com.example.tkfinalproject.UI.LastPage.lastPgae;
@@ -20,39 +18,38 @@ import com.example.tkfinalproject.Utility.UtilityClass;
 import com.example.tkfinalproject.Utility.basefragment;
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link creditCard#newInstance} factory method to
- * create an instance of this fragment.
+ * The creditCard class represents a fragment that handles credit card payment information.
+ * It extends the basefragment and implements View.OnClickListener to manage click events.
  */
 public class creditCard extends basefragment implements View.OnClickListener {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    // Fragment initialization parameters
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
+    // Declare utility class, button, card form, and phone object
     UtilityClass utilityClass;
     Button btn;
     CardForm cardForm;
     Phone phone;
 
-    // TODO: Rename and change types of parameters
+    // Parameters
     private String mParam1;
     private String mParam2;
 
+    /**
+     * Required empty public constructor for the fragment.
+     */
     public creditCard() {
-        // Required empty public constructor
     }
 
     /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
+     * Factory method to create a new instance of this fragment using the provided parameters.
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
      * @return A new instance of fragment creditCard.
      */
-    // TODO: Rename and change types and number of parameters
     public static creditCard newInstance(String param1, String param2) {
         creditCard fragment = new creditCard();
         Bundle args = new Bundle();
@@ -62,26 +59,46 @@ public class creditCard extends basefragment implements View.OnClickListener {
         return fragment;
     }
 
-
+    /**
+     * Called to do initial creation of a fragment.
+     *
+     * @param savedInstanceState If the fragment is being re-created from a previous saved state, this is the state.
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (savedInstanceState != null){
-            LocaleHelper.setLocale(getActivity(), "he");
+        if (savedInstanceState != null) {
+            LocaleHelper.setLocale(requireActivity(), "he");
         }
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
+
+    /**
+     * Called to have the fragment instantiate its user interface view.
+     *
+     * @param inflater The LayoutInflater object that can be used to inflate any views in the fragment.
+     * @param container If non-null, this is the parent view that the fragment's UI should be attached to. The fragment should not add the view itself, but this can be used to generate the LayoutParams of the view.
+     * @param savedInstanceState If non-null, this fragment is being re-constructed from a previous saved state as given here.
+     * @return Return the View for the fragment's UI, or null.
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_credit_card, container, false);
-        phone = (Phone)getActivity().getIntent().getSerializableExtra("price");
+
+        // Get phone object from activity's intent
+        phone = (Phone) requireActivity().getIntent().getSerializableExtra("price");
+
+        // Initialize utility class and button, set click listener
         utilityClass = new UtilityClass(getActivity());
         btn = view.findViewById(R.id.aprrovecard);
         btn.setOnClickListener(this);
+
+        // Initialize and set up card form
         cardForm = view.findViewById(R.id.card_form);
         cardForm.cardRequired(true)
                 .expirationRequired(true)
@@ -89,10 +106,8 @@ public class creditCard extends basefragment implements View.OnClickListener {
                 .cardholderName(CardForm.FIELD_REQUIRED)
                 .actionLabel("purchase")
                 .setup(getActivity());
-//        cardForm.getCvvEditText().setHintTextColor(R.color.black);
-//        cardForm.getCardEditText().setFieldHint(R.string.numberhint);
-//        cardForm.getExpirationDateEditText().setFieldHint(R.string.exphint);
-//        cardForm.getCardholderNameEditText().setFieldHint(R.string.namehint);
+
+        // Set hints and gravity for card form fields
         cardForm.getCvvEditText().setFieldHint(R.string.cvvhint);
         EditText cardNumberEditText = cardForm.getCardEditText();
         EditText expirationDateEditText = cardForm.getExpirationDateEditText();
@@ -102,21 +117,34 @@ public class creditCard extends basefragment implements View.OnClickListener {
         expirationDateEditText.setGravity(Gravity.RIGHT);
         cvvEditText.setGravity(Gravity.RIGHT);
         cardholderNameEditText.setGravity(Gravity.RIGHT);
-        cardholderNameEditText.setTextDirection(view.TEXT_DIRECTION_RTL);
-        super.ajustdsize(requireActivity(),view);
+        cardholderNameEditText.setTextDirection(View.TEXT_DIRECTION_RTL);
+
+        // Adjust size of the view
+        super.ajustdsize(requireActivity(), view);
+
         return view;
     }
 
-
+    /**
+     * Handles click events for the fragment's button.
+     * This method is called when the view has been clicked.
+     *
+     * @param view The view that was clicked.
+     */
     @Override
     public void onClick(View view) {
-        if (cardForm.isValid()){
+        if (cardForm.isValid()) {
+            // Create an intent to navigate to lastPage activity
             Intent intent = new Intent(getActivity(), lastPgae.class);
-            intent.putExtra("method","אשראי");
-            intent.putExtra("phone",phone);
+
+            // Add payment method and phone object to the intent
+            intent.putExtra("method", "אשראי");
+            intent.putExtra("phone", phone);
+
+            // Start the lastPage activity
             startActivity(intent);
-        }
-        else {
+        } else {
+            // Validate the card form
             cardForm.validate();
         }
     }

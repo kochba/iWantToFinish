@@ -1,23 +1,31 @@
 package com.example.tkfinalproject.Utility;
+
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkCapabilities;
-import android.net.NetworkRequest;
-import android.os.Build;
+import android.telephony.CellSignalStrength;
+import android.telephony.SignalStrength;
+import android.telephony.TelephonyManager;
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 
+import java.util.List;
+
 public class ConnectivityListener extends LiveData<Boolean> {
-    private Context context;
-    private ConnectivityManager connectivityManager;
+
+    private final ConnectivityManager connectivityManager;
     private ConnectivityManager.NetworkCallback networkCallback;
+    private final TelephonyManager telephonyManager;
+
 
     public ConnectivityListener(Context context) {
-        this.context = context;
+        context.getApplicationContext();
+        this.telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
         connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
     }
 
@@ -25,21 +33,13 @@ public class ConnectivityListener extends LiveData<Boolean> {
     protected void onActive() {
         super.onActive();
         updateConnection();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            connectivityManager.registerDefaultNetworkCallback(getNetworkCallback());
-        } else {
-            context.registerReceiver(networkReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
-        }
+        connectivityManager.registerDefaultNetworkCallback(getNetworkCallback());
     }
 
     @Override
     protected void onInactive() {
         super.onInactive();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            connectivityManager.unregisterNetworkCallback(networkCallback);
-        } else {
-            context.unregisterReceiver(networkReceiver);
-        }
+        connectivityManager.unregisterNetworkCallback(networkCallback);
     }
 
     private ConnectivityManager.NetworkCallback getNetworkCallback() {
@@ -65,22 +65,44 @@ public class ConnectivityListener extends LiveData<Boolean> {
             updateConnection();
         }
     };
+
     public void stopObserving() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+        if (networkCallback != null) {
             connectivityManager.unregisterNetworkCallback(networkCallback);
         }
     }
 
     private void updateConnection() {
         NetworkCapabilities capabilities = connectivityManager.getNetworkCapabilities(connectivityManager.getActiveNetwork());
-        postValue(capabilities != null &&
+        boolean isConnected = capabilities != null &&
                 capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) &&
-                capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED));
+                capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED);
+        postValue(isConnected);
     }
+
     public boolean isConnected() {
         NetworkCapabilities capabilities = connectivityManager.getNetworkCapabilities(connectivityManager.getActiveNetwork());
         return capabilities != null &&
                 capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) &&
                 capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED);
     }
+
+    private boolean hasSignal() {
+        SignalStrength signalStrength = telephonyManager.getSignalStrength();
+        if (signalStrength != null) {
+            List<CellSignalStrength> cellSignalStrengths;
+            cellSignalStrengths = signalStrength.getCellSignalStrengths();
+            if (cellSignalStrengths != null) {
+                for (CellSignalStrength cellSignalStrength : cellSignalStrengths) {
+                    if (cellSignalStrength.getLevel() > 0) {
+                        return true;
+                    }
+                }
+            } else {
+                Log.d("SignalCheck", "cellSignalStrengths is null");
+            }
+        }
+        return false;
+    }
+
 }

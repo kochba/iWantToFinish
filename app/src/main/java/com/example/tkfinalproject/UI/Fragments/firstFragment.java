@@ -2,9 +2,6 @@ package com.example.tkfinalproject.UI.Fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,42 +9,41 @@ import android.widget.EditText;
 
 import com.example.tkfinalproject.R;
 import com.example.tkfinalproject.UI.FirstPage.FirstPage;
-import com.example.tkfinalproject.UI.RefundActivity.Refund;
 import com.example.tkfinalproject.Utility.Phone;
 import com.example.tkfinalproject.Utility.basefragment;
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link firstFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * The firstFragment class represents a fragment that displays and handles
+ * information about a phone's model and status. It extends the basefragment.
  */
 public class firstFragment extends basefragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    // Fragment initialization parameters
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    EditText editText,editText2;
+
+    // Declare UI elements and other variables
+    EditText editText, editText2;
     Intent intent;
     Phone phone;
 
-    // TODO: Rename and change types of parameters
+    // Parameters
     private String mParam1;
     private String mParam2;
 
+    /**
+     * Required empty public constructor for the fragment.
+     */
     public firstFragment() {
-        // Required empty public constructor
     }
 
     /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
+     * Factory method to create a new instance of this fragment using the provided parameters.
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
      * @return A new instance of fragment firstFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static firstFragment newInstance(String param1, String param2) {
         firstFragment fragment = new firstFragment();
         Bundle args = new Bundle();
@@ -57,6 +53,11 @@ public class firstFragment extends basefragment {
         return fragment;
     }
 
+    /**
+     * Called to do initial creation of a fragment.
+     *
+     * @param savedInstanceState If the fragment is being re-created from a previous saved state, this is the state.
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,37 +67,43 @@ public class firstFragment extends basefragment {
         }
     }
 
+    /**
+     * Called to have the fragment instantiate its user interface view.
+     *
+     * @param inflater The LayoutInflater object that can be used to inflate any views in the fragment.
+     * @param container If non-null, this is the parent view that the fragment's UI should be attached to. The fragment should not add the view itself, but this can be used to generate the LayoutParams of the view.
+     * @param savedInstanceState If non-null, this fragment is being re-constructed from a previous saved state as given here.
+     * @return Return the View for the fragment's UI, or null.
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_first, container, false);
+
+        // Initialize UI elements
         editText = view.findViewById(R.id.model);
         editText2 = view.findViewById(R.id.level);
+
         try {
-            phone = (Phone)getActivity().getIntent().getSerializableExtra("price");
+            // Get phone object from activity's intent
+            phone = (Phone) requireActivity().getIntent().getSerializableExtra("price");
+
+            // Set phone details to EditText views
+            assert phone != null;
             editText.setText(phone.getCurrentPhone());
             editText2.setText(phone.getStauts());
-//            switch (phone.getCode()){
-//                case 1:
-//                    editText2.setText("לא תקין");
-//                    break;
-//                case 2:
-//                    editText2.setText("מסך קדמי/אחורי שבור");
-//                    break;
-//                case 3:
-//                    editText2.setText("תקין");
-//                    break;
-//                case 4:
-//                    editText2.setText("תקין+");
-//                    break;
-//            }
-        } catch (Exception e){
+
+        } catch (Exception e) {
+            // Handle exception by navigating to FirstPage
             intent = new Intent(getActivity(), FirstPage.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         }
-        super.ajustdsize(requireActivity(),view);
+
+        // Adjust size of the view
+        super.ajustdsize(requireActivity(), view);
+
         return view;
     }
 }

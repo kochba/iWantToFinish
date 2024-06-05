@@ -1,25 +1,29 @@
 package com.example.tkfinalproject.Utility;
 
 import android.app.Activity;
-import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.braintreepayments.cardform.view.CardForm;
-import com.braintreepayments.cardform.view.ErrorEditText;
-
+/**
+ * basefragment is a base class for fragments that provides functionality to adjust the sizes and margins
+ * of the views within the fragment according to the screen size.
+ */
 public class basefragment extends Fragment {
-    private static final int TARGET_WIDTH = 1080;
-    private static final int TARGET_HEIGHT = 2200;
+    private static final int TARGET_WIDTH = 1080; // Target width for scaling factor calculation
+    private static final int TARGET_HEIGHT = 2200; // Target height for scaling factor calculation
+
+    /**
+     * Adjusts the sizes and margins of the provided view and its children based on the scaling factors
+     * calculated from the device's screen dimensions.
+     *
+     * @param activity The activity context used to get the display metrics.
+     * @param view The root view whose child views' properties are to be adjusted.
+     */
     protected void ajustdsize(Activity activity, View view){
         DisplayMetrics displayMetrics = new DisplayMetrics();
         activity.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
@@ -29,9 +33,16 @@ public class basefragment extends Fragment {
         // Calculate the scaling factors
         float widthScaleFactor = (float) currentWidth / TARGET_WIDTH;
         float heightScaleFactor = (float) currentHeight / TARGET_HEIGHT;
-        adjustSizesAndMargins(widthScaleFactor, heightScaleFactor,view);
+        adjustSizesAndMargins(widthScaleFactor, heightScaleFactor, view);
     }
 
+    /**
+     * Adjusts sizes, margins, paddings, text sizes, and other properties of views within the provided root view recursively.
+     *
+     * @param widthScaleFactor  The factor by which to scale the width.
+     * @param heightScaleFactor The factor by which to scale the height.
+     * @param rootView          The root view whose child views' properties are to be adjusted.
+     */
     private void adjustSizesAndMargins(float widthScaleFactor, float heightScaleFactor, View rootView) {
         if (rootView instanceof ViewGroup) {
             ViewGroup viewGroup = (ViewGroup) rootView;
@@ -49,7 +60,6 @@ public class basefragment extends Fragment {
                         textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize * heightScaleFactor);
                     }
 
-
                     // Adjust width and height
                     if (marginParams.width != ViewGroup.LayoutParams.WRAP_CONTENT &&
                             marginParams.width != ViewGroup.LayoutParams.MATCH_PARENT) {
@@ -66,16 +76,19 @@ public class basefragment extends Fragment {
                     marginParams.topMargin = Math.round(marginParams.topMargin * heightScaleFactor);
                     marginParams.bottomMargin = Math.round(marginParams.bottomMargin * heightScaleFactor);
 
-//                    if (!(child instanceof CardForm)){
-//                        // Adjust padding
-//                        int paddingLeft = Math.round(child.getPaddingLeft() * widthScaleFactor);
-//                        int paddingTop = Math.round(child.getPaddingTop() * heightScaleFactor);
-//                        int paddingRight = Math.round(child.getPaddingRight() * widthScaleFactor);
-//                        int paddingBottom = Math.round(child.getPaddingBottom() * heightScaleFactor);
-//                        child.setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom);
-//
-//                        child.setLayoutParams(marginParams);
-//                    }
+                    child.setLayoutParams(marginParams);
+
+                    // Uncomment if you want to adjust padding as well, except for certain views
+                    /*
+                    if (!(child instanceof CardForm)){
+                        // Adjust padding
+                        int paddingLeft = Math.round(child.getPaddingLeft() * widthScaleFactor);
+                        int paddingTop = Math.round(child.getPaddingTop() * heightScaleFactor);
+                        int paddingRight = Math.round(child.getPaddingRight() * widthScaleFactor);
+                        int paddingBottom = Math.round(child.getPaddingBottom() * heightScaleFactor);
+                        child.setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom);
+                    }
+                    */
                 }
 
                 // Recursively adjust sizes and margins for child views
@@ -84,3 +97,4 @@ public class basefragment extends Fragment {
         }
     }
 }
+

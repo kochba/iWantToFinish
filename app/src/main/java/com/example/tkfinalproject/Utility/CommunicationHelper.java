@@ -9,20 +9,34 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 
+/**
+ * CommunicationHelper is a helper class that provides methods to send emails and SMS messages.
+ * It also handles SMS permission requests and results.
+ */
 public class CommunicationHelper {
-    private static final int SMS_PERMISSION_REQUEST_CODE = 101;
-    private Context context;
-    private Activity activity;
-    UtilityClass utilityClass;
+    private static final int REQUEST_CODE_SEND_EMAIL = 1; // Request code for sending email
+    UtilityClass utilityClass; // Utility class for showing alerts and other utilities
 
+    /**
+     * Constructor for CommunicationHelper.
+     *
+     * @param activity The activity context used to initialize the helper.
+     */
     public CommunicationHelper(Activity activity) {
-        this.context = activity.getApplicationContext();
-        this.activity = activity;
+        // Context of the application
+        Context context = activity.getApplicationContext();
         utilityClass = new UtilityClass(context);
     }
 
-    // Method to send an email
-    public void sendEmail(String[] to, InfoMeassge infoMeassge) {
+    /**
+     * Sends an email using an email client. The email content is constructed based on the provided
+     * InfoMeassge object.
+     *
+     * @param activity    The activity context used to start the email intent.
+     * @param to          The array of recipient email addresses.
+     * @param infoMeassge The object containing the information to be included in the email body.
+     */
+    public static void sendEmail(Activity activity, String[] to, InfoMeassge infoMeassge) {
         Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", "", null));
         emailIntent.putExtra(Intent.EXTRA_EMAIL, to);
         emailIntent.putExtra(Intent.EXTRA_SUBJECT, "פרטי עסקת הטרייד-אין עם RePepHole");
@@ -36,53 +50,23 @@ public class CommunicationHelper {
         emailIntent.putExtra(Intent.EXTRA_TEXT, messageBody);
 
         try {
-            activity.startActivity(Intent.createChooser(emailIntent, "Send email..."));
+            activity.startActivityForResult(Intent.createChooser(emailIntent, "Send email..."), REQUEST_CODE_SEND_EMAIL);
         } catch (android.content.ActivityNotFoundException ex) {
-            utilityClass.showAlertExp();
+            if (activity instanceof EmailCallback) {
+                ((EmailCallback) activity).onEmailReasult(false);
+            }
         }
     }
-//    private boolean hasSmsPermission() {
-//        return ContextCompat.checkSelfPermission(context, Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED;
-//    }
-//
-//    // Method to request SMS permission
-//    private void requestSmsPermission() {
-//        ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.SEND_SMS}, SMS_PERMISSION_REQUEST_CODE);
-//    }
-//
-//    // Method to handle the result of permission request
-//    public void onRequestPermissionsResult(int requestCode, int[] grantResults) {
-//        if (requestCode == SMS_PERMISSION_REQUEST_CODE) {
-//            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-//                Toast.makeText(context, "SMS permission granted", Toast.LENGTH_SHORT).show();
-//            } else {
-//                Toast.makeText(context, "SMS permission denied", Toast.LENGTH_SHORT).show();
-//            }
-//        }
-//    }
 
-    // Method to send an SMS
+
+    /**
+     * Sends an SMS message. The message content is constructed based on the provided InfoMeassge object.
+     * Uses the TwilioSMS service to send the message.
+     *
+     * @param phoneNumber The recipient phone number.
+     * @param infoMeassge The object containing the information to be included in the SMS body.
+     */
     public void sendSms(String phoneNumber, InfoMeassge infoMeassge) {
-//        if (hasSmsPermission()){
-//            try {
-//                SmsManager smsManager = SmsManager.getDefault();
-//                String messageBody = "תודה " + infoMeassge.getName() + " שביצעת טרייד-אין עם RePepHole\n" +
-//                        "פרטי הטרייד אין:\n" +
-//                        "מכשיר - " + infoMeassge.getPhone().getCurrentPhone() + "\n" +
-//                        "זיכוי – " + infoMeassge.getPhone().getAmount() + "\n" +
-//                        "מצב המכשיר - " + infoMeassge.getPhone().getStauts() + "\n" +
-//                        "דרך התשלום – " + infoMeassge.getMethod() + "\n" +
-//                        "ניפגש בפעמים הבאות!";
-//                smsManager.sendTextMessage(phoneNumber, null, messageBody, null, null);
-//                Toast.makeText(context, "SMS sent.", Toast.LENGTH_SHORT).show();
-//            } catch (Exception e) {
-//                utilityClass.showAlertExp();
-//                e.printStackTrace();
-//            }
-//        }
-//        else {
-//            requestSmsPermission();
-//        }
         String messageBody = "תודה " + infoMeassge.getName() + " שביצעת טרייד–אין עם RePepHole\n" +
                 "פרטי הטרייד–אין:\n" +
                 "מכשיר – " + infoMeassge.getPhone().getCurrentPhone() + "\n" +
@@ -90,6 +74,7 @@ public class CommunicationHelper {
                 "מצב המכשיר – " + infoMeassge.getPhone().getStauts() + "\n" +
                 "דרך התשלום – " + infoMeassge.getMethod() + "\n" +
                 "ניפגש בפעמים הבאות!";
-        //TwilioSMS.sendSMS(phoneNumber,messageBody);
+        TwilioSMS.sendSMS(phoneNumber, messageBody);
     }
 }
+

@@ -92,12 +92,26 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:layout_marginTop="75dp"
-        android:layout_marginBottom="50dp"
         android:background="@drawable/button"
         android:text="@string/update"
         android:textSize="35sp"
         android:fontFamily="@font/myfont"
         android:enabled="false"
         />
+        <Button
+            android:id="@+id/delete"
+            android:layout_width="188.5dp"
+            android:layout_height="64.3dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textColor="@color/newred"
+            android:layout_marginTop="35dp"
+            android:layout_marginBottom="50dp"
+            android:background="@drawable/button"
+            android:text="מחק משתמש"
+            android:textSize="30sp"
+            android:fontFamily="@font/myfont"
+            android:enabled="false"
+            />
     </LinearLayout>
 </ScrollView>

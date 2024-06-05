@@ -44,13 +44,25 @@
         android:src="@drawable/newlogo"
         android:layout_gravity="center"
         />
-    <ImageView
-        android:layout_width="match_parent"
+    <View
+        android:layout_width="350dp"
         android:layout_height="200dp"
-        android:src="@drawable/img"
-        android:layout_gravity="center"
-        android:layout_marginTop="60sp"
-        />
+        android:layout_marginTop="60dp"/>
+<!--    <com.airbnb.lottie.LottieAnimationView-->
+<!--        android:id="@+id/animationLast"-->
+<!--        android:layout_width="350dp"-->
+<!--        android:layout_height="200dp"-->
+<!--        android:layout_gravity="center"-->
+<!--        android:layout_marginTop="60dp"-->
+<!--        app:lottie_rawRes="@raw/finalanimition"-->
+<!--        />-->
+<!--    <ImageView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="200dp"-->
+<!--        android:src="@drawable/img"-->
+<!--        android:layout_gravity="center"-->
+<!--        android:layout_marginTop="60sp"-->
+<!--        />-->
     <Button
         android:id="@+id/newphone"
         android:layout_width="300dp"
