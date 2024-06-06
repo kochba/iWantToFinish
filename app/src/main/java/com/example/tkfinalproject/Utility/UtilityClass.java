@@ -96,24 +96,4 @@ public class UtilityClass {
         });
         adb.create().show();
     }
-
-    // Uncomment and complete this method if needed
-    // /**
-    //  * Shows an alert dialog with a custom title and message.
-    //  *
-    //  * @param head the title of the alert dialog.
-    //  * @param body the message of the alert dialog.
-    //  */
-    // public void showalert(String head, String body) {
-    //     adb.setTitle(head);
-    //     adb.setMessage(body);
-    //     adb.setCancelable(false);
-    //     adb.setPositiveButton("הבנתי", new DialogInterface.OnClickListener() {
-    //         @Override
-    //         public void onClick(DialogInterface dialog, int which) {
-    //             // Handle the positive button click
-    //         }
-    //     });
-    //     adb.create().show();
-    // }
 }

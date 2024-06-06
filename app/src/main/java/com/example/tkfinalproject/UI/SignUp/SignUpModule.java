@@ -8,26 +8,33 @@ import com.example.tkfinalproject.RePostry.User;
 import com.example.tkfinalproject.Utility.IonComplete;
 
 
+/**
+ * The SignUpModule class handles the sign-up operations.
+ * It communicates with the Repostry to perform user registration.
+ */
 public class SignUpModule {
-    Repostry repostry;
+
+    /** Repository to handle data operations. */
+    private final Repostry repostry;
 
     /**
-     * Constructor for SignUpModule.
+     * Constructor to initialize the SignUpModule with the given context.
      *
-     * @param context The context in which the SignUpModule is instantiated.
+     * @param context The context used to initialize the repository.
      */
     public SignUpModule(Context context) {
         repostry = new Repostry(context);
     }
 
     /**
-     * Initiates the sign-up process for a new user.
+     * Registers a new user by invoking the repository method for sign-up.
      *
-     * @param user             The user object containing sign-up information.
-     * @param ionCompleteInt   Callback interface to handle sign-up completion.
+     * @param user The User object containing the user's information.
+     * @param ionCompleteInt The callback interface to handle the completion of the sign-up process.
      */
     public void NewSignUp(User user, IonComplete.IonCompleteInt ionCompleteInt) {
         repostry.RNewSignUp(user, ionCompleteInt);
     }
 }
+
 
