@@ -63,6 +63,7 @@ public class UpdateUser extends BaseActivity implements View.OnClickListener {
 
         if (isConnected) {
             moudle = new UpdateUserMoudle(this);
+            super.showLoadingOverlay();
             moudle.showdata(editTextName, editTextPass, Update, Delete);
         } else {
             showalert("יש בעיה חבר!", "אין אינטרנט חבר אי אפשר לעדכן סיסמה", new Intent(this, FirstPage.class));

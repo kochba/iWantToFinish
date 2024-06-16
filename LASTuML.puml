@@ -1,0 +1,567 @@
+@startuml
+interface com.example.tkfinalproject.Utility.IonComplete {
+~ void onCompleteBool(boolean)
+}
+
+interface com.example.tkfinalproject.Utility.IonComplete$IonCompleteInt {
+~ void onCompleteInt(int)
+}
+
+interface com.example.tkfinalproject.Utility.IonComplete$IonCompleteUser {
+~ void onCompleteUser(User)
+}
+
+class com.example.tkfinalproject.Utility.LocaleHelper {
++ {static} void setLocale(Context,String)
+}
+
+class com.example.tkfinalproject.DB.MyFireBaseHelper {
+~ FirebaseDatabase database
+~ DatabaseReference reference
+~ Boolean finishd
+~ Boolean dontStooped
+~ Context myContext
+~ UtilityClass utilityClass
+~ ExecutorService executorService
+~ ConnectivityListener connectivityListener
+~ AtomicBoolean isConnected
+- Future<?> currentTask
+- void stopCurrentTask()
++ void addUser(User,IonComplete)
++ void update(User,User,IonComplete)
++ void remove(User,IonComplete)
++ void userNameExsIts(String,checkUser)
++ void userExsits(User,checkUser)
++ void getUserByName(String,IonComplete.IonCompleteUser)
++ void destroy()
+}
+
+
+interface com.example.tkfinalproject.DB.MyFireBaseHelper$checkUser {
+~ void onCheckedUser(boolean)
+}
+
+class com.example.tkfinalproject.UI.SelectPhone.selectNewPhoneMoudle {
+~ Repostry repostry
+~ CsvReader csvReader
+~ Random random
+~ Context myContext
+~ com.google.android.material.textfield.TextInputLayout inputModel
+~ EditText editText
+- AutoCompleteTextView autoCompleteBrand
+- AutoCompleteTextView autoCompleteModel
+- AutoCompleteTextView autoCompleteCapacity
+~ Button btn
++ void handleModelTextChanged(String,String,int)
++ Phone cratephoneobj()
+}
+
+
+class com.example.tkfinalproject.Utility.TwilioSMS {
+- {static} String ACCOUNT_SID
+- {static} String AUTH_TOKEN
+- {static} String TWILIO_PHONE_NUMBER
++ {static} void sendSMS(String,String)
+}
+
+
+class com.example.tkfinalproject.UI.Login.login {
+- Button btn
+- CheckBox checkBox
+- EditText username
+~ Boolean Pveq
+~ SharedPreferences sp
+~ String Un
+~ loginModule Module
+~ User user
+~ AlertDialog.Builder adb
+# void onCreate(Bundle)
+# int getRootLayoutId()
++ void onClick(View)
+- void showErrorDialog(String,String)
+}
+
+
+abstract class com.example.tkfinalproject.Utility.BaseActivity {
+- {static} int TARGET_WIDTH
+- {static} int TARGET_HEIGHT
+~ float heightScaleFactor
+~ float widthScaleFactor
+- ViewGroup mainContent
++ void setContentView(int)
+# void onCreate(Bundle)
+# void showLoadingOverlay()
++ void hideLoadingOverlay()
+- void setViewsEnabled(ViewGroup,boolean)
+# void onResume()
+# void onDestroy()
+# void onPause()
+# {abstract}int getRootLayoutId()
+- void adjustSizesAndMargins(float,float,View)
+}
+
+
+class com.example.tkfinalproject.UI.FirstPage.FirstPage {
+~ ImageView updateicon
+~ Intent intent
+~ Button btn
+# void onCreate(Bundle)
+# int getRootLayoutId()
++ void onClick(View)
+}
+
+
+class com.example.tkfinalproject.UI.Fragments.cancelFragment {
+- {static} String ARG_PARAM1
+- {static} String ARG_PARAM2
+~ Button button
+- String mParam1
+- String mParam2
++ {static} cancelFragment newInstance(String,String)
++ void onCreate(Bundle)
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
++ void onClick(View)
+}
+
+
+class com.example.tkfinalproject.UI.SelectPhone.SelectNewPhone {
+- {static} int TARGET_WIDTH
+- {static} int TARGET_HEIGHT
+~ com.google.android.material.textfield.TextInputLayout inputModel
+~ EditText ed1
+~ Random rnd
+- AutoCompleteTextView autoCompleteBrand
+~ ImageView updateicon
+~ Bundle MySaved
+~ selectNewPhoneMoudle moudle
+~ CsvReader csvReader
+~ List<String> brands
+~ String s1
+~ Intent intent
+~ Button btn
+- ArrayAdapter<String> modelAdapter
+- ArrayAdapter<String> capacityAdapter
+# void onCreate(Bundle)
+- void useState()
+# void onSaveInstanceState(Bundle)
+- void hideKeyboard()
++ void onClick(View)
+- void adjustSizesAndMargins(float,float)
+# int getRootLayoutId()
+}
+
+
+class com.example.tkfinalproject.UI.UpdateUser.UpdateUserMoudle {
+- Repostry repostry
+- Context myContext
+- AlertDialog.Builder adb
+- User user
+- SharedPreferences.Editor editor
+- Intent intent
++ void showdata(EditText,EditText,Button,Button)
++ void setUser(EditText,EditText)
++ void updateUser(EditText,EditText,IonComplete.IonCompleteInt)
++ void deleteUser(EditText,EditText)
+}
+
+
+class com.example.tkfinalproject.UI.LogOut.logoutModule {
+- Repostry repostry
+~ Intent intent
+~ Context myContex
+~ UtilityClass utilityClass
+~ SharedPreferences.Editor editor
+~ SharedPreferences sp
++ void makeLogout()
+}
+
+
+class com.example.tkfinalproject.UI.Fragments.creditCard {
+- {static} String ARG_PARAM1
+- {static} String ARG_PARAM2
+~ UtilityClass utilityClass
+~ Button btn
+~ CardForm cardForm
+~ Phone phone
+- String mParam1
+- String mParam2
++ {static} creditCard newInstance(String,String)
++ void onCreate(Bundle)
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
++ void onClick(View)
+}
+
+
+class com.example.tkfinalproject.UI.mainactivity.MainActivity {
+- Button log
+- Button sin
+~ MainActivityModule mainActivityModule
+~ Intent intent
+~ User user
+~ SharedPreferences sp
+# void onCreate(Bundle)
+# int getRootLayoutId()
+- void setClickTrue()
++ void onClick(View)
+}
+
+
+class com.example.tkfinalproject.RePostry.User {
+- String username
+- String pass
++ String getUsername()
++ void setUsername(String)
++ String getPass()
+}
+
+
+class com.example.tkfinalproject.UI.Progress.progressSecond {
+~ ProgressBar progressBar
+- {static} long TOTAL_TIME_MILLIS
+- CountDownTimer countDownTimer
+~ Intent intent
+~ Button btn
+# void onCreate(Bundle)
+# int getRootLayoutId()
+# void onDestroy()
++ void onClick(View)
+}
+
+
+class com.example.tkfinalproject.UI.RefundActivity.Refund {
+~ EditText editText
+~ Phone phone
+~ boolean reset
+~ int currentFragment
+- Button button1
+- Fragment fragment1
+# void onCreate(Bundle)
+# void onSaveInstanceState(Bundle)
+# int getRootLayoutId()
+- void showFragment(int)
+}
+
+
+class com.example.tkfinalproject.Utility.AutoResizeEditText {
+- {static} float MIN_TEXT_SIZE_SP
+- {static} float MAX_TEXT_SIZE_SP
+- {static} int TARGET_HEIGHT
+~ float heightScaleFactor
+- float minTextSizePx
+- float maxTextSizePx
+- void init(Context)
+- void resizeText(char)
+- void resizeText()
+- float convertSpToPixels(float,Context)
+# void onSizeChanged(int,int,int,int)
+}
+
+
+class com.example.tkfinalproject.UI.Progress.progerssFirst {
+~ ProgressBar progressBar
+- {static} long TOTAL_TIME_MILLIS
+~ Intent intent
+- CountDownTimer countDownTimer
+~ Button btn
+# void onCreate(Bundle)
+# int getRootLayoutId()
+# void onDestroy()
++ void onClick(View)
+}
+
+
+interface com.example.tkfinalproject.Utility.EmailCallback {
+~ void onEmailReasult(boolean)
+}
+
+class com.example.tkfinalproject.Utility.ConnectivityListener {
+- ConnectivityManager connectivityManager
+- ConnectivityManager.NetworkCallback networkCallback
+- TelephonyManager telephonyManager
+- BroadcastReceiver networkReceiver
+# void onActive()
+# void onInactive()
+- ConnectivityManager.NetworkCallback getNetworkCallback()
++ void stopObserving()
+- void updateConnection()
++ boolean isConnected()
+- boolean hasSignal()
+}
+
+
+class com.example.tkfinalproject.Utility.basefragment {
+- {static} int TARGET_WIDTH
+- {static} int TARGET_HEIGHT
+# void ajustdsize(Activity,View)
+- void adjustSizesAndMargins(float,float,View)
+}
+
+
+class com.example.tkfinalproject.DB.MyDataBaseHelper {
+~ UtilityClass utilityClass
+- {static} String DATABASE_NAME
+- {static} int DATABASE_VERSION
+- {static} String TABLE_NAME
+- {static} String COLUMN_ID
+- {static} String COLUMN_UserName
+- {static} String COLUMN_PassWord
+- String str
++ void onCreate(SQLiteDatabase)
++ void onUpgrade(SQLiteDatabase,int,int)
++ boolean AddUser(User)
+- String idByName(String)
++ boolean uptadePass(User)
++ boolean removeUser(User)
++ boolean DoesUserNameExisit(String)
+}
+
+
+class com.example.tkfinalproject.UI.SignUp.SignUpModule {
+- Repostry repostry
++ void NewSignUp(User,IonComplete.IonCompleteInt)
+}
+
+
+class com.example.tkfinalproject.RePostry.Repostry {
+- MyDataBaseHelper myDatabaseHelper
+- MyFireBaseHelper fireBaseHelper
+- Context myContext
+- {static} User currentUser
++ void setCurrentData(IonComplete)
++ User getCurrentUser()
++ void setCurrentUser(User)
++ void RNewSignUp(User,IonComplete.IonCompleteInt)
++ void updatedata(User,IonComplete.IonCompleteInt)
++ void doesUserNameExisit(String,MyFireBaseHelper.checkUser)
++ void IsExisit(String,String,MyFireBaseHelper.checkUser)
++ void addDbUser(User)
++ void removeUser(User,IonComplete)
+}
+
+
+class com.example.tkfinalproject.UI.Fragments.firstFragment {
+- {static} String ARG_PARAM1
+- {static} String ARG_PARAM2
+~ EditText editText
+~ Intent intent
+~ Phone phone
+- String mParam1
+- String mParam2
++ {static} firstFragment newInstance(String,String)
++ void onCreate(Bundle)
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
+}
+
+
+class com.example.tkfinalproject.UI.UpdateUser.UpdateUser {
+- EditText editTextName
+- Intent intent
+- Button Update
+- UpdateUserMoudle moudle
+- UtilityClass utilityClass
+- SharedPreferences sp
+- AlertDialog.Builder adb
+- User user
+# void onCreate(Bundle)
+# int getRootLayoutId()
+- void showalert(String,String)
+- void showalert(String,String,Intent)
++ void onClick(View)
+- void handleUpdate()
+- void handleDelete()
+- void resetButtons()
+- boolean containsLetter(String)
+}
+
+
+class com.example.tkfinalproject.Utility.CsvReader {
+~ Context mycontext
+~ UtilityClass utilityClass
++ List<String> getDistinctBrands(Context)
++ List<String> getModelsByBrand(Context,String)
++ List<String> getCapcity(Context,String,String)
++ String getprice1(Context,String,String,String)
++ String getpriceByCode(Context,String,String,String,int)
+}
+
+
+class com.example.tkfinalproject.Utility.CommunicationHelper {
+- {static} int REQUEST_CODE_SEND_EMAIL
+~ UtilityClass utilityClass
++ {static} void sendEmail(Activity,String[],InfoMeassge)
++ void sendSms(String,InfoMeassge)
+}
+
+
+class com.example.tkfinalproject.UI.Fragments.cashfragment {
+- {static} String ARG_PARAM1
+- {static} String ARG_PARAM2
+~ Button btn
+~ Phone phone
+- String mParam1
+- String mParam2
++ {static} cashfragment newInstance(String,String)
++ void onCreate(Bundle)
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
++ void onClick(View)
+}
+
+
+class com.example.tkfinalproject.UI.LastPage.lastPgae {
+~ AutoResizeEditText email
+~ UtilityClass utilityClass
+~ TextView textView
+~ boolean canGoBack
+~ AlertDialog.Builder adb
+~ LinearLayout linearLayout
+~ EditText phone
+~ CommunicationHelper communicationHelper
+~ Button button
+~ InfoMeassge infoMeassge
+~ com.airbnb.lottie.LottieAnimationView animationView
+~ OnBackPressedDispatcher onBackPressedDispatcher
+- {static} int REQUEST_CODE_SEND_EMAIL
+# void onCreate(Bundle)
+# void onActivityResult(int,int,Intent)
++ void onEmailReasult(boolean)
+# int getRootLayoutId()
++ void onClick(View)
++ void setAlarm(InfoMeassge)
++ boolean isValidEmail(String)
++ boolean isValidPhoneNumber(String,String)
+- {static} String changePhoneNumber(String)
+}
+
+
+class com.example.tkfinalproject.ExampleInstrumentedTest {
++ void useAppContext()
+}
+
+class com.example.tkfinalproject.Utility.InfoMeassge {
+~ String name
+~ Phone phone
+~ String Method
+~ Repostry repostry
++ String getName()
++ String getMethod()
++ Phone getPhone()
+}
+
+
+class com.example.tkfinalproject.UI.mainactivity.MainActivityModule {
+~ Repostry repostry
++ void StartLogin(User,MyFireBaseHelper.checkUser)
++ void setUser(User)
+}
+
+
+class com.example.tkfinalproject.Utility.Phone {
+~ int code
+~ String amount
+~ String currentPhone
+~ String stauts
++ String getCurrentPhone()
++ void setCurrentPhone(String)
++ int getCode()
++ void setCode(int)
++ String getAmount()
++ void setAmount(String)
++ String getStauts()
++ void setStauts(String)
+}
+
+
+class com.example.tkfinalproject.UI.LogOut.LogOut1 {
+~ Button btn
+~ logoutModule module
+~ UtilityClass utilityClass
+# void onCreate(Bundle)
++ void onClick(View)
+# int getRootLayoutId()
+}
+
+
+class com.example.tkfinalproject.UI.SignUp.SignUp {
+- EditText name
+- Button btn
+~ SharedPreferences sp
+~ Boolean PV
+~ Boolean Pveq
+~ SignUpModule signUpModule
+~ UtilityClass utilityClass
+# void onCreate(Bundle)
+# int getRootLayoutId()
++ void onClick(View)
+- boolean containsLetter(String)
+}
+
+
+class com.example.tkfinalproject.ExampleUnitTest {
++ void addition_isCorrect()
+}
+
+class com.example.tkfinalproject.Utility.UtilityClass {
+~ Context Mycontext
+~ AlertDialog.Builder adb
++ Boolean isConected()
++ void showAlertExp()
++ void showAlertInternet()
++ void showAlertEmail()
++ void showAlertPhoneNumber()
+}
+
+
+class com.example.tkfinalproject.Utility.AlarmReceiver {
++ void onReceive(Context,Intent)
+}
+
+class com.example.tkfinalproject.UI.Login.loginModule {
+~ Repostry repostry
++ void UserExsist(User,MyFireBaseHelper.checkUser)
++ void setUser(User)
++ void addUser(User)
+}
+
+
+
+
+com.example.tkfinalproject.Utility.IonComplete +.. com.example.tkfinalproject.Utility.IonComplete$IonCompleteInt
+com.example.tkfinalproject.Utility.IonComplete +.. com.example.tkfinalproject.Utility.IonComplete$IonCompleteUser
+com.example.tkfinalproject.DB.MyFireBaseHelper +.. com.example.tkfinalproject.DB.MyFireBaseHelper$checkUser
+com.example.tkfinalproject.UI.Login.OnClickListener <|.. com.example.tkfinalproject.UI.Login.login
+com.example.tkfinalproject.Utility.BaseActivity <|-- com.example.tkfinalproject.UI.Login.login
+androidx.appcompat.app.AppCompatActivity <|-- com.example.tkfinalproject.Utility.BaseActivity
+com.example.tkfinalproject.UI.FirstPage.OnClickListener <|.. com.example.tkfinalproject.UI.FirstPage.FirstPage
+com.example.tkfinalproject.Utility.BaseActivity <|-- com.example.tkfinalproject.UI.FirstPage.FirstPage
+com.example.tkfinalproject.UI.Fragments.OnClickListener <|.. com.example.tkfinalproject.UI.Fragments.cancelFragment
+com.example.tkfinalproject.Utility.basefragment <|-- com.example.tkfinalproject.UI.Fragments.cancelFragment
+com.example.tkfinalproject.UI.SelectPhone.OnClickListener <|.. com.example.tkfinalproject.UI.SelectPhone.SelectNewPhone
+com.example.tkfinalproject.Utility.BaseActivity <|-- com.example.tkfinalproject.UI.SelectPhone.SelectNewPhone
+com.example.tkfinalproject.UI.Fragments.OnClickListener <|.. com.example.tkfinalproject.UI.Fragments.creditCard
+com.example.tkfinalproject.Utility.basefragment <|-- com.example.tkfinalproject.UI.Fragments.creditCard
+com.example.tkfinalproject.UI.mainactivity.OnClickListener <|.. com.example.tkfinalproject.UI.mainactivity.MainActivity
+com.example.tkfinalproject.Utility.BaseActivity <|-- com.example.tkfinalproject.UI.mainactivity.MainActivity
+com.example.tkfinalproject.UI.Progress.OnClickListener <|.. com.example.tkfinalproject.UI.Progress.progressSecond
+com.example.tkfinalproject.Utility.BaseActivity <|-- com.example.tkfinalproject.UI.Progress.progressSecond
+com.example.tkfinalproject.Utility.BaseActivity <|-- com.example.tkfinalproject.UI.RefundActivity.Refund
+androidx.appcompat.widget.AppCompatEditText <|-- com.example.tkfinalproject.Utility.AutoResizeEditText
+com.example.tkfinalproject.UI.Progress.OnClickListener <|.. com.example.tkfinalproject.UI.Progress.progerssFirst
+com.example.tkfinalproject.Utility.BaseActivity <|-- com.example.tkfinalproject.UI.Progress.progerssFirst
+androidx.lifecycle.LiveData <|-- com.example.tkfinalproject.Utility.ConnectivityListener
+androidx.fragment.app.Fragment <|-- com.example.tkfinalproject.Utility.basefragment
+android.database.sqlite.SQLiteOpenHelper <|-- com.example.tkfinalproject.DB.MyDataBaseHelper
+com.example.tkfinalproject.Utility.basefragment <|-- com.example.tkfinalproject.UI.Fragments.firstFragment
+com.example.tkfinalproject.UI.UpdateUser.OnClickListener <|.. com.example.tkfinalproject.UI.UpdateUser.UpdateUser
+com.example.tkfinalproject.Utility.BaseActivity <|-- com.example.tkfinalproject.UI.UpdateUser.UpdateUser
+com.example.tkfinalproject.UI.Fragments.OnClickListener <|.. com.example.tkfinalproject.UI.Fragments.cashfragment
+com.example.tkfinalproject.Utility.basefragment <|-- com.example.tkfinalproject.UI.Fragments.cashfragment
+com.example.tkfinalproject.UI.LastPage.OnClickListener <|.. com.example.tkfinalproject.UI.LastPage.lastPgae
+com.example.tkfinalproject.Utility.EmailCallback <|.. com.example.tkfinalproject.UI.LastPage.lastPgae
+com.example.tkfinalproject.Utility.BaseActivity <|-- com.example.tkfinalproject.UI.LastPage.lastPgae
+java.io.Serializable <|.. com.example.tkfinalproject.Utility.Phone
+com.example.tkfinalproject.UI.LogOut.OnClickListener <|.. com.example.tkfinalproject.UI.LogOut.LogOut1
+com.example.tkfinalproject.Utility.BaseActivity <|-- com.example.tkfinalproject.UI.LogOut.LogOut1
+com.example.tkfinalproject.UI.SignUp.OnClickListener <|.. com.example.tkfinalproject.UI.SignUp.SignUp
+com.example.tkfinalproject.Utility.BaseActivity <|-- com.example.tkfinalproject.UI.SignUp.SignUp
+android.content.BroadcastReceiver <|-- com.example.tkfinalproject.Utility.AlarmReceiver
+@enduml

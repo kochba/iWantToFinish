@@ -2,8 +2,6 @@ package com.example.tkfinalproject.RePostry;
 
 import android.content.Context;
 
-import androidx.lifecycle.LifecycleOwner;
-
 import com.example.tkfinalproject.DB.MyDataBaseHelper;
 import com.example.tkfinalproject.DB.MyFireBaseHelper;
 import com.example.tkfinalproject.Utility.IonComplete;
@@ -13,10 +11,9 @@ import com.example.tkfinalproject.Utility.IonComplete;
  * and removing users. It interacts with both a local database and Firebase to perform these operations.
  */
 public class Repostry {
-    private final MyDataBaseHelper myDatabaseHelper;
-    private final MyFireBaseHelper fireBaseHelper;
-    private final Context myContext;
-    private static User currentUser;
+    private final MyDataBaseHelper myDatabaseHelper;   // Helper for local database operations
+    private final MyFireBaseHelper fireBaseHelper;     // Helper for Firebase operations
+    private static User currentUser;                   // Current user in the system
 
     /**
      * Constructor to initialize the Repostry with a context.
@@ -25,8 +22,7 @@ public class Repostry {
      */
     public Repostry(Context context) {
         myDatabaseHelper = new MyDataBaseHelper(context);
-        fireBaseHelper = new MyFireBaseHelper(context, (LifecycleOwner) context);
-        myContext = context;
+        fireBaseHelper = new MyFireBaseHelper(context);
     }
 
     /**
@@ -62,7 +58,7 @@ public class Repostry {
     }
 
     /**
-     * Registers a new user and adds the user to both local database and Firebase.
+     * Registers a new user and adds the user to both the local database and Firebase.
      * Calls the provided callback with the result of the operation.
      *
      * @param user The user to register.
@@ -90,15 +86,15 @@ public class Repostry {
     }
 
     /**
-     * Updates the user data in both local database and Firebase. Calls the provided callback
-     * with the result of the operation.
+     * Updates the user data in both the local database and Firebase.
+     * Calls the provided callback with the result of the operation.
      *
      * @param user The user data to update.
      * @param ionCompleteInt The callback to be called with the result of the operation.
      */
     public void updatedata(User user, IonComplete.IonCompleteInt ionCompleteInt) {
         if (myDatabaseHelper.uptadePass(user)) {
-            fireBaseHelper.update(currentUser, user, flag -> {
+            fireBaseHelper.update(user, flag -> {
                 if (flag) {
                     ionCompleteInt.onCompleteInt(0);
                 } else {
@@ -115,7 +111,7 @@ public class Repostry {
      * Checks if a username already exists in Firebase and calls the provided callback with the result.
      *
      * @param userName The username to check.
-     * @param checkUser The callback to be called with the result of the check.
+     * @param checkUser The callback to be called with the result.
      */
     public void doesUserNameExisit(String userName, MyFireBaseHelper.checkUser checkUser) {
         fireBaseHelper.userNameExsIts(userName, checkUser);
@@ -126,7 +122,7 @@ public class Repostry {
      *
      * @param name The username to check.
      * @param pass The password to check.
-     * @param checkUser The callback to be called with the result of the check.
+     * @param checkUser The callback to be called with the result.
      */
     public void IsExisit(String name, String pass, MyFireBaseHelper.checkUser checkUser) {
         fireBaseHelper.userExsits(new User(name, pass), checkUser);
@@ -144,11 +140,11 @@ public class Repostry {
     }
 
     /**
-     * Removes a user from both local database and Firebase. Calls the provided callback
-     * with the result of the operation.
+     * Removes a user from both the local database and Firebase.
+     * Calls the provided callback with the result of the operation.
      *
      * @param user The user to remove.
-     * @param ionComplete The callback to be called with the result of the operation.
+     * @param ionComplete The callback to be called with the result.
      */
     public void removeUser(User user, IonComplete ionComplete) {
         if (myDatabaseHelper.removeUser(user)) {

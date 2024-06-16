@@ -18,12 +18,12 @@ import com.example.tkfinalproject.Utility.IonComplete;
  * and deleting user data. It interacts with a repository to perform these operations.
  */
 public class UpdateUserMoudle {
-    private final Repostry repostry;
-    private final Context myContext;
-    private final AlertDialog.Builder adb;
-    private User user;
-    private final SharedPreferences.Editor editor;
-    private Intent intent;
+    private final Repostry repostry;           // Repository for handling user data operations
+    private final Context myContext;           // Context for various operations
+    private final AlertDialog.Builder adb;     // Alert dialog builder for displaying messages
+    private User user;                         // User object to hold current user data
+    private final SharedPreferences.Editor editor; // SharedPreferences editor for storing user data
+    private Intent intent;                     // Intent for navigation
 
     /**
      * Constructor to initialize the UpdateUserMoudle with a context.
@@ -53,6 +53,9 @@ public class UpdateUserMoudle {
             editTextPass.setText(user1.getPass());
             btn.setEnabled(true);
             btn2.setEnabled(true);
+            if (myContext instanceof UpdateUser){
+                ((UpdateUser) myContext).hideLoadingOverlay();
+            }
         });
     }
 
@@ -107,4 +110,5 @@ public class UpdateUserMoudle {
         });
     }
 }
+
 

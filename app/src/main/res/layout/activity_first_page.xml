@@ -44,32 +44,21 @@
         android:src="@drawable/newlogo"
         android:layout_gravity="center"
         />
-    <View
+    <ImageView
+        android:id="@+id/updatepassnp"
         android:layout_width="350dp"
-        android:layout_height="200dp"
-        android:layout_marginTop="60dp"/>
-<!--    <com.airbnb.lottie.LottieAnimationView-->
-<!--        android:id="@+id/animationLast"-->
-<!--        android:layout_width="350dp"-->
-<!--        android:layout_height="200dp"-->
-<!--        android:layout_gravity="center"-->
-<!--        android:layout_marginTop="60dp"-->
-<!--        app:lottie_rawRes="@raw/finalanimition"-->
-<!--        />-->
-<!--    <ImageView-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="200dp"-->
-<!--        android:src="@drawable/img"-->
-<!--        android:layout_gravity="center"-->
-<!--        android:layout_marginTop="60sp"-->
-<!--        />-->
+        android:layout_height="250dp"
+        android:layout_gravity="center"
+        android:layout_margin="60dp"
+        android:src="@drawable/down"
+        />
     <Button
         android:id="@+id/newphone"
         android:layout_width="300dp"
         android:layout_height="75dp"
         android:layout_gravity="center"
         android:gravity="center"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="30dp"
         android:text="בחר מכשיר לטרייד-אין"
         android:background="@drawable/button"
         android:textColor="@color/black"
